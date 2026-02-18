@@ -8,7 +8,7 @@ A web app for a friend group to view, explore, and compare their Fantasy Olympic
 
 ## Background & Context
 
-The group has participated in Fantasy Olympics across multiple Games (starting from at least Paris 2024). Each participant:
+The group has participated in Fantasy Olympics across multiple Games, starting from **Rio 2016** through **Milano Cortina 2026**. Each participant:
 - Drafts one country per sport (e.g., Josh drafted USA in Aquatics)
 - Accumulates medal points over the duration of the Games
 - Is tracked daily via screenshots of medal standings
@@ -21,7 +21,7 @@ Players joined at different times, so the "all-time" leaderboard must support a 
 - **Bronze** = 1 pt
 - **Total score** = (Gold × 5) + (Silver × 3) + (Bronze × 1)
 
-> Confirm exact point values with the group if different.
+✅ *Confirmed correct.*
 
 ---
 
@@ -210,12 +210,22 @@ This is the core tracking structure. Each snapshot represents one update (one sc
 
 Since data is entered manually (from screenshots), we need a lightweight way to input snapshots.
 
-**Options (decide before build):**
-- [ ] JSON files committed to the repo (simple, version-controlled)
-- [ ] Simple admin UI form (enter date + scores for each player)
-- [ ] Google Sheets as backend (read-only API)
+### Phase 1 — JSON files (MVP)
+- Josh edits JSON directly and commits to git
+- Simple, version-controlled, zero infrastructure
+- One file per game in `/data/games/`
 
-**Recommended starting point:** JSON files in `/data/` folder, one file per game, imported at build time. Can graduate to a database later.
+### Phase 2 — Password-protected Admin UI
+- A simple `/admin` route, gated by a hardcoded passphrase (not real auth)
+- The league commissioner can enter new snapshots via a form
+- Writes to a GitHub Gist or a small hosted JSON store (e.g., JSONBin.io or Supabase free tier)
+- Josh can promote this when the commissioner wants to self-serve updates during a live Games
+
+### Snapshot Data Availability
+- Some years: only **second-to-last day + finals** are available
+- Some years: **every single day** is available
+- The data model supports both — snapshots array can have 2 entries or 20, the graph adapts
+- Years with only 2 snapshots will show a simple before/after chart
 
 ---
 
@@ -262,16 +272,17 @@ Since data is entered manually (from screenshots), we need a lightweight way to 
 
 ---
 
-## Tech Stack (Recommended)
+## Tech Stack
 
 | Layer | Choice | Reason |
 |-------|--------|--------|
 | Framework | React + Vite | Fast dev, easy deployment |
 | Styling | Tailwind CSS | Rapid UI, responsive |
 | Graphing | Recharts | Simple, React-native charting |
-| Data | JSON files | No backend needed to start |
+| Data (Phase 1) | JSON files in `/data/` | No backend, version-controlled |
+| Data (Phase 2) | Vercel serverless + JSONBin or Supabase | Commissioner can self-serve |
 | Routing | React Router | Multi-page SPA |
-| Deployment | GitHub Pages or Vercel | Free, static hosting |
+| Deployment | **Vercel** | Free, git-connected, serverless-ready |
 
 ---
 
@@ -283,36 +294,81 @@ Aquatics, Archery, Athletics, Badminton, Basketball, Boxing, Canoeing, Cycling, 
 
 ---
 
+## Games Roster
+
+| Game | ID | Season | Notes |
+|------|----|--------|-------|
+| Rio 2016 | `rio-2016` | Summer | First game tracked |
+| PyeongChang 2018 | `pyeongchang-2018` | Winter | |
+| Tokyo 2020 | `tokyo-2020` | Summer | Held 2021 |
+| Beijing 2022 | `beijing-2022` | Winter | |
+| Paris 2024 | `paris-2024` | Summer | Full CSV roster available |
+| Milano Cortina 2026 | `milano-2026` | Winter | Current / most recent |
+
+> Confirm which of these were actually tracked — not all years may have been played.
+
+---
+
+## Hosting Decision
+
+### ✅ Recommended: Vercel (free tier)
+
+| | GitHub Pages | Vercel |
+|--|--|--|
+| Cost | Free | Free |
+| Custom domain | ✓ | ✓ |
+| Deploy from git | ✓ | ✓ |
+| Serverless functions (for future admin API) | ✗ | ✓ |
+| Automatic preview deploys per branch | ✗ | ✓ |
+| Complexity | Minimal | Minimal |
+
+**Verdict:** Start on **Vercel**. It's as simple as GitHub Pages for a static site, but gives us a path to add a small serverless API later when we build the commissioner admin UI — without changing hosting.
+
+**Deploy flow:**
+1. Push to `main` → Vercel auto-deploys in ~30 seconds
+2. Josh edits JSON locally, commits, pushes → site updates
+3. Phase 2: add a `/api/snapshot` serverless route for the admin form
+
+---
+
 ## Open Questions / To Confirm
 
-1. **Scoring formula** — Gold=5, Silver=3, Bronze=1? Or different?
-2. **Admin UI** — Do we want a form to enter daily snapshots, or just edit JSON?
-3. **Other Olympic years** — Which other Games have you tracked? (e.g., Tokyo 2020, LA 2028?)
-5. **Historical snapshot data** — Do you have the daily screenshots ready to transcribe? Or just final standings?
-6. **Breaking** — Is this included in future games? (It was dropped after Paris 2024)
-7. **Hosting** — GitHub Pages, Vercel, or local only?
+1. ~~**Scoring formula**~~ ✅ Gold=5, Silver=3, Bronze=1
+2. ~~**Admin UI**~~ ✅ JSON first, commissioner UI in Phase 2
+3. ~~**Hosting**~~ ✅ Vercel
+4. **Games played** — Confirm which of Rio/PyeongChang/Tokyo/Beijing/Paris/Milano were tracked
+6. **Breaking** — Confirm if included in games after Paris 2024 (it was dropped from LA 2028)
+7. **Sports list per game** — Winter games will have a completely different sport list; need a CSV or list per game
 
 ---
 
 ## MVP Scope
 
-### Phase 1 (MVP)
-- [ ] Data structure finalized + Paris 2024 data entered
-- [ ] Game Overview page with final standings table
-- [ ] Progress graph (if daily snapshots available)
-- [ ] Team roster page per player
+### Phase 1 — Core Viewer (JSON + Vercel)
+- [ ] Repo scaffolded (React + Vite + Tailwind + Recharts)
+- [ ] `/data/` structure defined and Paris 2024 data entered
+- [ ] Home page: game selector grid
+- [ ] Game Overview: final standings table + trophy icons
+- [ ] Game Overview: progress graph (adapts to however many snapshots exist)
+- [ ] Team roster page per player per game
+- [ ] Deployed to Vercel
 
-### Phase 2
-- [ ] All-time leaderboard with "from [Game]" filter
-- [ ] Daily detail / delta view
-- [ ] Multiple games supported
-
-### Phase 3
-- [ ] Admin data entry UI
+### Phase 2 — History & Leaderboard
+- [ ] All games entered (Rio → Milano)
+- [ ] All-time leaderboard page with "from [Game]" filter
+- [ ] Daily detail / delta view (rank change indicators)
 - [ ] Mobile-responsive polish
-- [ ] Export / share standings image
+
+### Phase 3 — Commissioner Tools
+- [ ] Password-gated `/admin` route
+- [ ] Form to add new snapshots during live Games
+- [ ] Serverless API to persist submissions
+- [ ] Export / share standings as image
 
 ---
 
-*Last updated: 2025*
+---
+
+*Last updated: February 2025*
 *Project: Fantasy Olympics Tracker*
+*Stack: React + Vite + Tailwind + Recharts → Vercel*
