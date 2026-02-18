@@ -44,9 +44,12 @@ Each player is identified by a `playerId` and shown by their real first name (`d
   "startDate": "2024-07-26",
   "endDate": "2024-08-11",
   "hostCity": "Paris",
-  "hostCountry": "France"
+  "hostCountry": "France",
+  "sportCount": 33
 }
 ```
+
+> `sportCount` = number of sports drafted in that game. Used to compute "points per medal event" on the all-time leaderboard. Derived from the sports CSV for each game; estimated manually for Sochi 2014.
 
 ---
 
@@ -64,7 +67,13 @@ Each player is identified by a `playerId` and shown by their real first name (`d
 
 ### Note on Winter vs. Summer Games
 
-Winter and Summer Olympics have **entirely different sports lists** and run on alternating 2-year cycles. The app treats them as the same series chronologically (for the all-time leaderboard), but each game's roster and draft data is completely independent. The leaderboard "from [Game]" filter works across both seasons.
+Winter and Summer Olympics have **entirely different sports lists** and run on alternating 2-year cycles. The app treats them as the same chronological series for the all-time leaderboard, but each game's roster and draft data is completely independent.
+
+**Sports list data availability:**
+- Sochi 2014: ❌ No sports CSV available — standings data only
+- Rio 2016 → Milano Cortina 2026: ✅ Sports CSVs available
+
+The `sportCount` field on each game object is used to compute "points per medal event" on the leaderboard. For Sochi, this will be set manually or estimated.
 
 ---
 
@@ -198,15 +207,27 @@ This is the core tracking structure. Each snapshot represents one update (one sc
 **"From [Game]" filter**
 - Dropdown to select starting Game (e.g., "From Paris 2024")
 - Recalculates totals using only games from that point forward
-- Players who joined after the selected start are included; earlier players are not penalized
+- Players who joined after the selected start are included; earlier players are not penalized for games before they joined
 
-**Table columns:**
-- Rank | Player | Games Played | Total Gold | Total Silver | Total Bronze | Total Score | Best Finish | Worst Finish
+**View toggle: Raw Score ↔ Points per Medal Event**
+- Default view: **Raw Score** — total accumulated points across all selected games
+- Alternate view: **Points per Medal Event** — total score ÷ total number of sports drafted across all selected games
+  - Example: if a player scored 246 pts across Paris 2024 (33 sports) + Beijing 2022 (15 sports) = 48 events → 246/48 = 5.1 pts/event
+  - This normalizes for Summer vs Winter games having very different sport counts
+  - Also normalizes for players who joined later and have played fewer total games
+
+**Table columns (Raw Score view):**
+| Rank | Player | Games Played | Total Gold | Total Silver | Total Bronze | Total Score | Best Finish | Worst Finish | Pts/Event |
+
+**Table columns (Pts/Event view):**
+- Same columns but sorted by Pts/Event, with Total Score shown as secondary
 
 **Graph:**
-- Cumulative score per player across Games (one point per Game, not per day)
-- X-axis: Olympic Games in order
-- Y-axis: Cumulative score
+- Toggle: Cumulative total score **or** per-game score (bar chart per game)
+- X-axis: Olympic Games in chronological order
+- Y-axis: Score
+- One line/bar per player, color-coded by player (consistent colors throughout app)
+- Players only appear from their `joinedGameId` onward
 
 ---
 
@@ -290,11 +311,15 @@ Since data is entered manually (from screenshots), we need a lightweight way to 
 
 ---
 
-## Sports List (Paris 2024)
+## Sports Lists
 
+Each game has its own sport list. Winter and Summer lists are completely different. Sports lists are sourced from CSVs (Rio 2016 onward).
+
+### Paris 2024 (Summer) — 33 sports
 Aquatics, Archery, Athletics, Badminton, Basketball, Boxing, Canoeing, Cycling, Breaking, Equestrian, Football, Fencing, Field Hockey, Golf, Gymnastics, Handball, Judo, Modern Pentathlon, Rowing, Rugby Sevens, Sailing, Sport Climbing, Shooting, Skateboarding, Surfing, Tennis, Taekwondo, Triathlon, Table Tennis, Volleyball, Weightlifting, Wrestling
 
-*(33 sports total)*
+### Other Games
+Sports lists for Rio 2016, PyeongChang 2018, Tokyo 2020, Beijing 2022, Milano Cortina 2026 will be loaded from their respective CSVs into each game's JSON file. Sochi 2014 sports list not available — `sportCount` to be estimated.
 
 ---
 
@@ -344,8 +369,11 @@ Aquatics, Archery, Athletics, Badminton, Basketball, Boxing, Canoeing, Cycling, 
 2. ~~**Admin UI**~~ ✅ JSON first, commissioner UI in Phase 2
 3. ~~**Hosting**~~ ✅ Vercel
 4. ~~**Games played**~~ ✅ Sochi 2014, Rio 2016, PyeongChang 2018, Tokyo 2020, Beijing 2022, Paris 2024, Milano Cortina 2026
-6. **Breaking** — Confirm if included in games after Paris 2024 (it was dropped from LA 2028)
-7. **Sports list per game** — Winter games will have a completely different sport list; need a CSV or list per game
+5. ~~**Leaderboard scoring**~~ ✅ Raw score totals + Points per Medal Event (score ÷ sports drafted) toggle
+6. ~~**Display names**~~ ✅ Always show real first names; always show real first names
+7. ~~**Sports list data**~~ ✅ Available for Rio 2016 onward; Sochi 2014 is standings-only
+9. **Breaking** — Was this sport included in any games other than Paris 2024? (Dropped after 2024)
+10. **Sochi 2014 sport count** — Need an estimate or exact count to enable Pts/Event for that game
 
 ---
 
