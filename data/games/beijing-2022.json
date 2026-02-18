@@ -1,0 +1,314 @@
+{
+  "game": {
+    "id": "beijing-2022",
+    "name": "Beijing 2022 Winter Olympics",
+    "year": 2022,
+    "season": "Winter",
+    "startDate": "2022-02-04",
+    "endDate": "2022-02-20",
+    "hostCity": "Beijing",
+    "hostCountry": "China",
+    "sportCount": 15,
+    "medalEvents": 109
+  },
+  "playerMappings": [
+    { "playerId": "marcus" },
+    { "playerId": "laura" },
+    { "playerId": "josh" },
+    { "playerId": "jessica" },
+    { "playerId": "leah" },
+    { "playerId": "pat" },
+    { "playerId": "andrea" },
+    { "playerId": "katie" },
+    { "playerId": "emalee" }
+  ],
+  "rosters": [
+    {
+      "playerId": "marcus",
+      "draft": {
+        "Alpine Skiing":             "USA",
+        "Bobsleigh":                 "Latvia",
+        "Biathlon":                  "Sweden",
+        "Cross-Country Skiing":      "Switzerland",
+        "Curling":                   "Norway",
+        "Freestyle Skiing":          "Canada",
+        "Figure Skating":            "Italy",
+        "Ice Hockey":                "Switzerland",
+        "Luge":                      "China",
+        "Nordic Combined":           "Poland",
+        "Snowboard":                 "Switzerland",
+        "Ski Jumping":               "Austria",
+        "Skeleton":                  "Germany",
+        "Speed Skating":             "USA",
+        "Short Track Speed Skating": "Netherlands"
+      }
+    },
+    {
+      "playerId": "laura",
+      "draft": {
+        "Alpine Skiing":             "Norway",
+        "Bobsleigh":                 "Great Britain",
+        "Biathlon":                  "Czech Republic",
+        "Cross-Country Skiing":      "Norway",
+        "Curling":                   "China",
+        "Freestyle Skiing":          "France",
+        "Figure Skating":            "France",
+        "Ice Hockey":                "Sweden",
+        "Luge":                      "Canada",
+        "Nordic Combined":           "Norway",
+        "Snowboard":                 "Austria",
+        "Ski Jumping":               "Slovenia",
+        "Skeleton":                  "USA",
+        "Speed Skating":             "Norway",
+        "Short Track Speed Skating": "Canada"
+      }
+    },
+    {
+      "playerId": "josh",
+      "draft": {
+        "Alpine Skiing":             "France",
+        "Bobsleigh":                 "South Korea",
+        "Biathlon":                  "Norway",
+        "Cross-Country Skiing":      "ROC",
+        "Curling":                   "Great Britain",
+        "Freestyle Skiing":          "Switzerland",
+        "Figure Skating":            "China",
+        "Ice Hockey":                "Czech Republic",
+        "Luge":                      "ROC",
+        "Nordic Combined":           "Austria",
+        "Snowboard":                 "Japan",
+        "Ski Jumping":               "Japan",
+        "Skeleton":                  "Latvia",
+        "Speed Skating":             "Japan",
+        "Short Track Speed Skating": "USA"
+      }
+    },
+    {
+      "playerId": "jessica",
+      "draft": {
+        "Alpine Skiing":             "Czech Republic",
+        "Bobsleigh":                 "France",
+        "Biathlon":                  "ROC",
+        "Cross-Country Skiing":      "France",
+        "Curling":                   "South Korea",
+        "Freestyle Skiing":          "Norway",
+        "Figure Skating":            "USA",
+        "Ice Hockey":                "Finland",
+        "Luge":                      "Latvia",
+        "Nordic Combined":           "France",
+        "Snowboard":                 "Italy",
+        "Ski Jumping":               "ROC",
+        "Skeleton":                  "Austria",
+        "Speed Skating":             "Canada",
+        "Short Track Speed Skating": "Hungary"
+      }
+    },
+    {
+      "playerId": "leah",
+      "draft": {
+        "Alpine Skiing":             "Switzerland",
+        "Bobsleigh":                 "USA",
+        "Biathlon":                  "Slovenia",
+        "Cross-Country Skiing":      "Germany",
+        "Curling":                   "Switzerland",
+        "Freestyle Skiing":          "USA",
+        "Figure Skating":            "Japan",
+        "Ice Hockey":                "Canada",
+        "Luge":                      "Austria",
+        "Nordic Combined":           "USA",
+        "Snowboard":                 "Canada",
+        "Ski Jumping":               "Czech Republic",
+        "Skeleton":                  "Canada",
+        "Speed Skating":             "Czech Republic",
+        "Short Track Speed Skating": "South Korea"
+      }
+    },
+    {
+      "playerId": "pat",
+      "draft": {
+        "Alpine Skiing":             "Austria",
+        "Bobsleigh":                 "Austria",
+        "Biathlon":                  "Slovakia",
+        "Cross-Country Skiing":      "Sweden",
+        "Curling":                   "Canada",
+        "Freestyle Skiing":          "Ukraine",
+        "Figure Skating":            "Germany",
+        "Ice Hockey":                "Germany",
+        "Luge":                      "Slovakia",
+        "Nordic Combined":           "Czech Republic",
+        "Snowboard":                 "Czech Republic",
+        "Ski Jumping":               "Norway",
+        "Skeleton":                  "Great Britain",
+        "Speed Skating":             "Italy",
+        "Short Track Speed Skating": "Italy"
+      }
+    },
+    {
+      "playerId": "andrea",
+      "draft": {
+        "Alpine Skiing":             "Liechtenstein",
+        "Bobsleigh":                 "Canada",
+        "Biathlon":                  "Germany",
+        "Cross-Country Skiing":      "Italy",
+        "Curling":                   "Sweden",
+        "Freestyle Skiing":          "Belarus",
+        "Figure Skating":            "Canada",
+        "Ice Hockey":                "ROC",
+        "Luge":                      "Germany",
+        "Nordic Combined":           "Finland",
+        "Snowboard":                 "France",
+        "Ski Jumping":               "Germany",
+        "Skeleton":                  "China",
+        "Speed Skating":             "Belgium",
+        "Short Track Speed Skating": "ROC"
+      }
+    },
+    {
+      "playerId": "katie",
+      "draft": {
+        "Alpine Skiing":             "Italy",
+        "Bobsleigh":                 "Germany",
+        "Biathlon":                  "Belarus",
+        "Cross-Country Skiing":      "Finland",
+        "Curling":                   "Japan",
+        "Freestyle Skiing":          "Australia",
+        "Figure Skating":            "ROC",
+        "Ice Hockey":                "USA",
+        "Luge":                      "USA",
+        "Nordic Combined":           "Germany",
+        "Snowboard":                 "Germany",
+        "Ski Jumping":               "USA",
+        "Skeleton":                  "South Korea",
+        "Speed Skating":             "Netherlands",
+        "Short Track Speed Skating": "Japan"
+      }
+    },
+    {
+      "playerId": "emalee",
+      "draft": {
+        "Alpine Skiing":             "Sweden",
+        "Bobsleigh":                 "ROC",
+        "Biathlon":                  "France",
+        "Cross-Country Skiing":      "USA",
+        "Curling":                   "USA",
+        "Freestyle Skiing":          "China",
+        "Figure Skating":            "Spain",
+        "Ice Hockey":                "Denmark",
+        "Luge":                      "Czech Republic",
+        "Nordic Combined":           "Japan",
+        "Snowboard":                 "USA",
+        "Ski Jumping":               "Poland",
+        "Skeleton":                  "ROC",
+        "Speed Skating":             "South Korea",
+        "Short Track Speed Skating": "China"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "date": "2022-02-05",
+      "dayLabel": "Day 1",
+      "standings": [
+        { "playerId": "laura",   "gold": 2, "silver": 0, "bronze": 1, "totalScore": 11 },
+        { "playerId": "josh",    "gold": 1, "silver": 1, "bronze": 0, "totalScore": 8  },
+        { "playerId": "emalee",  "gold": 1, "silver": 1, "bronze": 0, "totalScore": 8  },
+        { "playerId": "pat",     "gold": 0, "silver": 2, "bronze": 0, "totalScore": 6  },
+        { "playerId": "katie",   "gold": 1, "silver": 0, "bronze": 0, "totalScore": 5  },
+        { "playerId": "marcus",  "gold": 0, "silver": 1, "bronze": 0, "totalScore": 3  },
+        { "playerId": "andrea",  "gold": 0, "silver": 1, "bronze": 0, "totalScore": 3  },
+        { "playerId": "jessica", "gold": 0, "silver": 0, "bronze": 3, "totalScore": 3  },
+        { "playerId": "leah",    "gold": 0, "silver": 0, "bronze": 0, "totalScore": 0  }
+      ]
+    },
+    {
+      "date": "2022-02-07",
+      "dayLabel": "Day 3",
+      "standings": [
+        { "playerId": "katie",   "gold": 4, "silver": 2, "bronze": 2, "totalScore": 28 },
+        { "playerId": "josh",    "gold": 3, "silver": 4, "bronze": 1, "totalScore": 28 },
+        { "playerId": "emalee",  "gold": 3, "silver": 4, "bronze": 1, "totalScore": 28 },
+        { "playerId": "leah",    "gold": 2, "silver": 2, "bronze": 3, "totalScore": 19 },
+        { "playerId": "laura",   "gold": 3, "silver": 0, "bronze": 3, "totalScore": 18 },
+        { "playerId": "andrea",  "gold": 2, "silver": 1, "bronze": 0, "totalScore": 13 },
+        { "playerId": "pat",     "gold": 1, "silver": 2, "bronze": 1, "totalScore": 12 },
+        { "playerId": "jessica", "gold": 0, "silver": 2, "bronze": 4, "totalScore": 10 },
+        { "playerId": "marcus",  "gold": 0, "silver": 3, "bronze": 0, "totalScore": 9  }
+      ]
+    },
+    {
+      "date": "2022-02-08",
+      "dayLabel": "Day 4",
+      "standings": [
+        { "playerId": "emalee",  "gold": 5, "silver": 4, "bronze": 3, "totalScore": 40 },
+        { "playerId": "katie",   "gold": 5, "silver": 4, "bronze": 2, "totalScore": 39 },
+        { "playerId": "laura",   "gold": 5, "silver": 2, "bronze": 4, "totalScore": 35 },
+        { "playerId": "josh",    "gold": 3, "silver": 4, "bronze": 5, "totalScore": 32 },
+        { "playerId": "pat",     "gold": 4, "silver": 3, "bronze": 1, "totalScore": 30 },
+        { "playerId": "andrea",  "gold": 3, "silver": 3, "bronze": 1, "totalScore": 25 },
+        { "playerId": "leah",    "gold": 2, "silver": 2, "bronze": 3, "totalScore": 19 },
+        { "playerId": "marcus",  "gold": 0, "silver": 5, "bronze": 0, "totalScore": 15 },
+        { "playerId": "jessica", "gold": 0, "silver": 2, "bronze": 4, "totalScore": 10 }
+      ]
+    },
+    {
+      "date": "2022-02-11",
+      "dayLabel": "Day 7",
+      "standings": [
+        { "playerId": "katie",   "gold": 8, "silver": 6, "bronze": 3, "totalScore": 61 },
+        { "playerId": "laura",   "gold": 7, "silver": 5, "bronze": 5, "totalScore": 55 },
+        { "playerId": "leah",    "gold": 5, "silver": 7, "bronze": 9, "totalScore": 55 },
+        { "playerId": "emalee",  "gold": 7, "silver": 5, "bronze": 3, "totalScore": 53 },
+        { "playerId": "josh",    "gold": 5, "silver": 5, "bronze": 7, "totalScore": 47 },
+        { "playerId": "andrea",  "gold": 5, "silver": 5, "bronze": 3, "totalScore": 43 },
+        { "playerId": "pat",     "gold": 5, "silver": 5, "bronze": 2, "totalScore": 42 },
+        { "playerId": "marcus",  "gold": 2, "silver": 7, "bronze": 2, "totalScore": 33 },
+        { "playerId": "jessica", "gold": 2, "silver": 3, "bronze": 6, "totalScore": 25 }
+      ]
+    },
+    {
+      "date": "2022-02-14",
+      "dayLabel": "Day 10",
+      "standings": [
+        { "playerId": "josh",    "gold": 9,  "silver": 8,  "bronze": 11, "totalScore": 80 },
+        { "playerId": "leah",    "gold": 7,  "silver": 10, "bronze": 11, "totalScore": 76 },
+        { "playerId": "emalee",  "gold": 10, "silver": 7,  "bronze": 4,  "totalScore": 75 },
+        { "playerId": "laura",   "gold": 8,  "silver": 7,  "bronze": 6,  "totalScore": 67 },
+        { "playerId": "katie",   "gold": 8,  "silver": 7,  "bronze": 3,  "totalScore": 64 },
+        { "playerId": "marcus",  "gold": 6,  "silver": 8,  "bronze": 2,  "totalScore": 56 },
+        { "playerId": "andrea",  "gold": 5,  "silver": 7,  "bronze": 6,  "totalScore": 52 },
+        { "playerId": "pat",     "gold": 6,  "silver": 5,  "bronze": 3,  "totalScore": 48 },
+        { "playerId": "jessica", "gold": 3,  "silver": 4,  "bronze": 9,  "totalScore": 36 }
+      ]
+    },
+    {
+      "date": "2022-02-19",
+      "dayLabel": "Day 15",
+      "standings": [
+        { "playerId": "josh",    "gold": 17, "silver": 13, "bronze": 16, "totalScore": 140 },
+        { "playerId": "leah",    "gold": 13, "silver": 14, "bronze": 15, "totalScore": 122 },
+        { "playerId": "katie",   "gold": 13, "silver": 16, "bronze": 8,  "totalScore": 121 },
+        { "playerId": "laura",   "gold": 14, "silver": 8,  "bronze": 9,  "totalScore": 103 },
+        { "playerId": "emalee",  "gold": 13, "silver": 10, "bronze": 7,  "totalScore": 102 },
+        { "playerId": "marcus",  "gold": 7,  "silver": 11, "bronze": 6,  "totalScore": 74  },
+        { "playerId": "andrea",  "gold": 7,  "silver": 7,  "bronze": 7,  "totalScore": 63  },
+        { "playerId": "pat",     "gold": 6,  "silver": 9,  "bronze": 6,  "totalScore": 63  },
+        { "playerId": "jessica", "gold": 4,  "silver": 7,  "bronze": 11, "totalScore": 52  }
+      ]
+    },
+    {
+      "date": "2022-02-20",
+      "dayLabel": "Final",
+      "standings": [
+        { "playerId": "josh",    "gold": 18, "silver": 13, "bronze": 16, "totalScore": 145 },
+        { "playerId": "katie",   "gold": 14, "silver": 18, "bronze": 9,  "totalScore": 133 },
+        { "playerId": "leah",    "gold": 13, "silver": 14, "bronze": 15, "totalScore": 122 },
+        { "playerId": "laura",   "gold": 15, "silver": 8,  "bronze": 10, "totalScore": 109 },
+        { "playerId": "emalee",  "gold": 13, "silver": 11, "bronze": 7,  "totalScore": 105 },
+        { "playerId": "marcus",  "gold": 7,  "silver": 11, "bronze": 6,  "totalScore": 74  },
+        { "playerId": "pat",     "gold": 7,  "silver": 9,  "bronze": 6,  "totalScore": 68  },
+        { "playerId": "andrea",  "gold": 7,  "silver": 8,  "bronze": 9,  "totalScore": 68  },
+        { "playerId": "jessica", "gold": 5,  "silver": 7,  "bronze": 11, "totalScore": 57  }
+      ]
+    }
+  ]
+}
