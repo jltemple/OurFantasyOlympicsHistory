@@ -45,11 +45,13 @@ Each player is identified by a `playerId` and shown by their real first name (`d
   "endDate": "2024-08-11",
   "hostCity": "Paris",
   "hostCountry": "France",
-  "sportCount": 33
+  "sportCount": 33,
+  "medalEvents": 329
 }
 ```
 
-> `sportCount` = number of sports drafted in that game. Used to compute "points per medal event" on the all-time leaderboard. Derived from the sports CSV for each game; estimated manually for Sochi 2014.
+> `sportCount` = number of distinct sports players drafted from (e.g. 33 for Paris 2024).
+> `medalEvents` = total gold medals available across all disciplines at that Olympics (e.g. 329 for Paris 2024 — Aquatics alone has ~35 events). Used to compute "points per medal event" on the all-time leaderboard. Sourced from Wikipedia / Olympics.com; no estimation needed.
 
 ---
 
@@ -73,7 +75,7 @@ Winter and Summer Olympics have **entirely different sports lists** and run on a
 - Sochi 2014: ❌ No sports CSV available — standings data only
 - Rio 2016 → Milano Cortina 2026: ✅ Sports CSVs available
 
-The `sportCount` field on each game object is used to compute "points per medal event" on the leaderboard. For Sochi, this will be set manually or estimated.
+The `medalEvents` field on each game object is used to compute "points per medal event" on the leaderboard. All values are confirmed from official sources — no estimation needed, including Sochi 2014 (98 events).
 
 ---
 
@@ -211,10 +213,26 @@ This is the core tracking structure. Each snapshot represents one update (one sc
 
 **View toggle: Raw Score ↔ Points per Medal Event**
 - Default view: **Raw Score** — total accumulated points across all selected games
-- Alternate view: **Points per Medal Event** — total score ÷ total number of sports drafted across all selected games
-  - Example: if a player scored 246 pts across Paris 2024 (33 sports) + Beijing 2022 (15 sports) = 48 events → 246/48 = 5.1 pts/event
-  - This normalizes for Summer vs Winter games having very different sport counts
+- Alternate view: **Points per Medal Event** — total score ÷ total medal events across all selected games
+  - "Medal events" = total number of gold medals available at that Olympics (every sport × every discipline within it)
+  - Each drafted sport contains multiple medal events (e.g. Aquatics includes freestyle, backstroke, butterfly, relay, etc.)
+  - This is the fairest normalization: a player who scored 246 pts at Paris 2024 (329 medal events) vs. someone who scored 180 pts at Beijing 2022 (109 medal events) are on truly comparable footing
   - Also normalizes for players who joined later and have played fewer total games
+
+**Total medal events per game (confirmed):**
+
+| Game | Season | Medal Events |
+|------|--------|-------------|
+| Sochi 2014 | Winter | 98 |
+| Rio 2016 | Summer | 306 |
+| PyeongChang 2018 | Winter | 102 |
+| Tokyo 2020 | Summer | 339 |
+| Beijing 2022 | Winter | 109 |
+| Paris 2024 | Summer | 329 |
+| Milano Cortina 2026 | Winter | 116 *(confirmed, games in progress)* |
+
+> Source: Wikipedia / Olympics.com official programme counts.
+> Note: All players draft the same set of sports per game, so the total medal events figure is shared equally — individual "pts per event" only differs by score, not by which sports they picked.
 
 **Table columns (Raw Score view):**
 | Rank | Player | Games Played | Total Gold | Total Silver | Total Bronze | Total Score | Best Finish | Worst Finish | Pts/Event |
@@ -373,7 +391,7 @@ Sports lists for Rio 2016, PyeongChang 2018, Tokyo 2020, Beijing 2022, Milano Co
 6. ~~**Display names**~~ ✅ Always show real first names; always show real first names
 7. ~~**Sports list data**~~ ✅ Available for Rio 2016 onward; Sochi 2014 is standings-only
 9. **Breaking** — Was this sport included in any games other than Paris 2024? (Dropped after 2024)
-10. **Sochi 2014 sport count** — Need an estimate or exact count to enable Pts/Event for that game
+10. ~~**Sochi 2014 sport count**~~ ✅ All medal event counts confirmed from Wikipedia/Olympics.com (see table in leaderboard section)
 
 ---
 
