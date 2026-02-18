@@ -1,0 +1,93 @@
+{
+  "game": {
+    "id": "sochi-2014",
+    "name": "Sochi 2014 Winter Olympics",
+    "year": 2014,
+    "season": "Winter",
+    "startDate": "2014-02-07",
+    "endDate": "2014-02-23",
+    "hostCity": "Sochi",
+    "hostCountry": "Russia",
+    "sportCount": null,
+    "medalEvents": 98
+  },
+  "playerMappings": [
+    { "playerId": "josh" },
+    { "playerId": "laura" },
+    { "playerId": "katie_n" },
+    { "playerId": "melissa" },
+    { "playerId": "leah" },
+    { "playerId": "megan" },
+    { "playerId": "marcus" },
+    { "playerId": "pat" },
+    { "playerId": "kyler" },
+    { "playerId": "frank" }
+  ],
+  "rosters": [],
+  "snapshots": [
+    {
+      "date": "2014-02-12",
+      "dayLabel": "Day 5",
+      "standings": [
+        { "playerId": "josh",    "gold": 4, "silver": 4, "bronze": 5, "totalScore": 37 },
+        { "playerId": "laura",   "gold": 5, "silver": 2, "bronze": 4, "totalScore": 35 },
+        { "playerId": "katie_n", "gold": 4, "silver": 3, "bronze": 4, "totalScore": 33 },
+        { "playerId": "melissa", "gold": 3, "silver": 4, "bronze": 2, "totalScore": 29 },
+        { "playerId": "leah",    "gold": 4, "silver": 2, "bronze": 2, "totalScore": 28 },
+        { "playerId": "megan",   "gold": 3, "silver": 1, "bronze": 3, "totalScore": 21 },
+        { "playerId": "marcus",  "gold": 2, "silver": 2, "bronze": 1, "totalScore": 17 },
+        { "playerId": "pat",     "gold": 2, "silver": 1, "bronze": 0, "totalScore": 13 },
+        { "playerId": "frank",   "gold": 1, "silver": 2, "bronze": 0, "totalScore": 11 },
+        { "playerId": "kyler",   "gold": 1, "silver": 2, "bronze": 0, "totalScore": 11 }
+      ]
+    },
+    {
+      "date": "2014-02-17",
+      "dayLabel": "Day 10",
+      "standings": [
+        { "playerId": "josh",    "gold": 7,  "silver": 11, "bronze": 9, "totalScore": 77 },
+        { "playerId": "melissa", "gold": 9,  "silver": 8,  "bronze": 4, "totalScore": 73 },
+        { "playerId": "leah",    "gold": 10, "silver": 4,  "bronze": 6, "totalScore": 68 },
+        { "playerId": "laura",   "gold": 8,  "silver": 4,  "bronze": 6, "totalScore": 58 },
+        { "playerId": "katie_n", "gold": 5,  "silver": 5,  "bronze": 6, "totalScore": 46 },
+        { "playerId": "megan",   "gold": 6,  "silver": 1,  "bronze": 4, "totalScore": 37 },
+        { "playerId": "pat",     "gold": 4,  "silver": 2,  "bronze": 5, "totalScore": 31 },
+        { "playerId": "marcus",  "gold": 3,  "silver": 4,  "bronze": 1, "totalScore": 28 },
+        { "playerId": "kyler",   "gold": 2,  "silver": 4,  "bronze": 3, "totalScore": 25 },
+        { "playerId": "frank",   "gold": 1,  "silver": 5,  "bronze": 1, "totalScore": 21 }
+      ]
+    },
+    {
+      "date": "2014-02-20",
+      "dayLabel": "Day 13",
+      "standings": [
+        { "playerId": "josh",    "gold": 8,  "silver": 15, "bronze": 14, "totalScore": 99 },
+        { "playerId": "melissa", "gold": 13, "silver": 9,  "bronze": 7,  "totalScore": 99 },
+        { "playerId": "laura",   "gold": 11, "silver": 6,  "bronze": 7,  "totalScore": 80 },
+        { "playerId": "leah",    "gold": 11, "silver": 4,  "bronze": 8,  "totalScore": 75 },
+        { "playerId": "katie_n", "gold": 7,  "silver": 7,  "bronze": 9,  "totalScore": 65 },
+        { "playerId": "marcus",  "gold": 8,  "silver": 6,  "bronze": 2,  "totalScore": 60 },
+        { "playerId": "megan",   "gold": 7,  "silver": 3,  "bronze": 6,  "totalScore": 50 },
+        { "playerId": "frank",   "gold": 5,  "silver": 6,  "bronze": 1,  "totalScore": 44 },
+        { "playerId": "pat",     "gold": 5,  "silver": 3,  "bronze": 5,  "totalScore": 39 },
+        { "playerId": "kyler",   "gold": 3,  "silver": 7,  "bronze": 3,  "totalScore": 39 }
+      ]
+    },
+    {
+      "date": "2014-02-23",
+      "dayLabel": "Final",
+      "standings": [
+        { "playerId": "melissa", "gold": 18, "silver": 10, "bronze": 7,  "totalScore": 127 },
+        { "playerId": "josh",    "gold": 10, "silver": 16, "bronze": 15, "totalScore": 113 },
+        { "playerId": "laura",   "gold": 13, "silver": 7,  "bronze": 7,  "totalScore": 93  },
+        { "playerId": "leah",    "gold": 12, "silver": 6,  "bronze": 10, "totalScore": 88  },
+        { "playerId": "katie_n", "gold": 9,  "silver": 10, "bronze": 12, "totalScore": 87  },
+        { "playerId": "marcus",  "gold": 9,  "silver": 9,  "bronze": 6,  "totalScore": 78  },
+        { "playerId": "megan",   "gold": 8,  "silver": 5,  "bronze": 7,  "totalScore": 62  },
+        { "playerId": "kyler",   "gold": 5,  "silver": 9,  "bronze": 7,  "totalScore": 59  },
+        { "playerId": "frank",   "gold": 6,  "silver": 8,  "bronze": 3,  "totalScore": 57  },
+        { "playerId": "pat",     "gold": 7,  "silver": 3,  "bronze": 6,  "totalScore": 50  }
+      ]
+    }
+  ]
+}
