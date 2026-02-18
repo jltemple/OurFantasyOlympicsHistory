@@ -8,7 +8,7 @@ A web app for a friend group to view, explore, and compare their Fantasy Olympic
 
 ## Background & Context
 
-The group has participated in Fantasy Olympics across multiple Games, starting from **Rio 2016** through **Milano Cortina 2026**. Each participant:
+The group has participated in Fantasy Olympics across multiple Games, starting from **Sochi 2014** through **Milano Cortina 2026**. Each participant:
 - Drafts one country per sport (e.g., Josh drafted USA in Aquatics)
 - Accumulates medal points over the duration of the Games
 - Is tracked daily via screenshots of medal standings
@@ -56,11 +56,15 @@ Each player is identified by a `playerId` and shown by their real first name (`d
 {
   "id": "josh",
   "displayName": "Josh",
-  "joinedGameId": "paris-2024"
+  "joinedGameId": "sochi-2014"
 }
 ```
 
-> `joinedGameId` is the first Olympics they participated in. Used for the "from [Game]" filter.
+> `joinedGameId` is the first Olympics they participated in. Used for the "from [Game]" filter on the leaderboard.
+
+### Note on Winter vs. Summer Games
+
+Winter and Summer Olympics have **entirely different sports lists** and run on alternating 2-year cycles. The app treats them as the same series chronologically (for the all-time leaderboard), but each game's roster and draft data is completely independent. The leaderboard "from [Game]" filter works across both seasons.
 
 ---
 
@@ -296,16 +300,19 @@ Aquatics, Archery, Athletics, Badminton, Basketball, Boxing, Canoeing, Cycling, 
 
 ## Games Roster
 
-| Game | ID | Season | Notes |
-|------|----|--------|-------|
-| Rio 2016 | `rio-2016` | Summer | First game tracked |
-| PyeongChang 2018 | `pyeongchang-2018` | Winter | |
-| Tokyo 2020 | `tokyo-2020` | Summer | Held 2021 |
-| Beijing 2022 | `beijing-2022` | Winter | |
-| Paris 2024 | `paris-2024` | Summer | Full CSV roster available |
-| Milano Cortina 2026 | `milano-2026` | Winter | Current / most recent |
+| # | Game | ID | Season | Notes |
+|---|------|----|--------|-------|
+| 1 | Sochi 2014 | `sochi-2014` | Winter | First game tracked |
+| 2 | Rio 2016 | `rio-2016` | Summer | |
+| 3 | PyeongChang 2018 | `pyeongchang-2018` | Winter | |
+| 4 | Tokyo 2020 | `tokyo-2020` | Summer | Held 2021 |
+| 5 | Beijing 2022 | `beijing-2022` | Winter | |
+| 6 | Paris 2024 | `paris-2024` | Summer | ✅ Full CSV roster available |
+| 7 | Milano Cortina 2026 | `milano-2026` | Winter | Current / most recent |
 
-> Confirm which of these were actually tracked — not all years may have been played.
+7 total Games. Alternates Summer/Winter every ~2 years.
+
+> Note: Not all players will have participated in all 7 games. The "from [Game]" filter on the leaderboard handles this.
 
 ---
 
@@ -336,7 +343,7 @@ Aquatics, Archery, Athletics, Badminton, Basketball, Boxing, Canoeing, Cycling, 
 1. ~~**Scoring formula**~~ ✅ Gold=5, Silver=3, Bronze=1
 2. ~~**Admin UI**~~ ✅ JSON first, commissioner UI in Phase 2
 3. ~~**Hosting**~~ ✅ Vercel
-4. **Games played** — Confirm which of Rio/PyeongChang/Tokyo/Beijing/Paris/Milano were tracked
+4. ~~**Games played**~~ ✅ Sochi 2014, Rio 2016, PyeongChang 2018, Tokyo 2020, Beijing 2022, Paris 2024, Milano Cortina 2026
 6. **Breaking** — Confirm if included in games after Paris 2024 (it was dropped from LA 2028)
 7. **Sports list per game** — Winter games will have a completely different sport list; need a CSV or list per game
 
