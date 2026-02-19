@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script>
+      // GitHub Pages SPA redirect: preserve the path in sessionStorage,
+      // then redirect to the root so index.html loads.
+      var path = window.location.pathname.replace('/OurFantasyOlympicsHistory', '') || '/';
+      sessionStorage.setItem('spa-redirect', path + window.location.search);
+      window.location.replace('/OurFantasyOlympicsHistory/');
+    </script>
+  </head>
+</html>
