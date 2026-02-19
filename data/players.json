@@ -1,0 +1,23 @@
+[
+  { "id": "josh",      "displayName": "Josh",      "joinedGameId": "sochi-2014"      },
+  { "id": "laura",     "displayName": "Laura",     "joinedGameId": "sochi-2014"      },
+  { "id": "katie_n",   "displayName": "Katie N",   "joinedGameId": "sochi-2014"      },
+  { "id": "melissa",   "displayName": "Melissa",   "joinedGameId": "sochi-2014"      },
+  { "id": "leah",      "displayName": "Leah",      "joinedGameId": "sochi-2014"      },
+  { "id": "megan",     "displayName": "Megan",     "joinedGameId": "sochi-2014"      },
+  { "id": "marcus",    "displayName": "Marcus",    "joinedGameId": "sochi-2014"      },
+  { "id": "pat",       "displayName": "Pat",       "joinedGameId": "sochi-2014"      },
+  { "id": "kyler",     "displayName": "Kyler",     "joinedGameId": "sochi-2014"      },
+  { "id": "frank",     "displayName": "Frank",     "joinedGameId": "sochi-2014"      },
+  { "id": "jessica_s", "displayName": "Jessica S", "joinedGameId": "rio-2016"        },
+  { "id": "brandon",   "displayName": "Brandon",   "joinedGameId": "rio-2016"        },
+  { "id": "sal",       "displayName": "Sal",       "joinedGameId": "rio-2016"        },
+  { "id": "jessica",   "displayName": "Jessica",   "joinedGameId": "rio-2016"        },
+  { "id": "emalee",    "displayName": "Emalee",    "joinedGameId": "pyeongchang-2018"},
+  { "id": "katie",     "displayName": "Katie",     "joinedGameId": "pyeongchang-2018"},
+  { "id": "andrea",    "displayName": "Andrea",    "joinedGameId": "tokyo-2020"      },
+  { "id": "casey",     "displayName": "Casey",     "joinedGameId": "tokyo-2020"      },
+  { "id": "miles",     "displayName": "Miles",     "joinedGameId": "paris-2024"      },
+  { "id": "jon",       "displayName": "Jon",       "joinedGameId": "paris-2024"      },
+  { "id": "bryan",     "displayName": "Bryan",     "joinedGameId": "paris-2024"      }
+]
