@@ -192,7 +192,7 @@ export default function Leaderboard() {
   const [expandedId,         setExpandedId]          = useState(null)
   const [showChart,          setShowChart]           = useState(true)
   const [showAllUpdates,     setShowAllUpdates]      = useState(false)
-  const [currentOnly,        setCurrentOnly]         = useState(false)
+  const [currentOnly,        setCurrentOnly]         = useState(true)
 
   const { rows, series, gameSeries, gameRegions, lastGamePlayerIds } =
     useLeaderboard(fromGameId, mode, currentOnly)
@@ -267,12 +267,12 @@ export default function Leaderboard() {
               setFromGameId(e.target.value || null)
               setExpandedId(null)
             }}
-            className="bg-transparent text-white text-sm px-3 py-2 appearance-none cursor-pointer focus:outline-none"
+            className="bg-[#1a1f2e] text-white text-sm px-3 py-2 appearance-none cursor-pointer focus:outline-none"
             style={{ backgroundImage: 'none' }}
           >
-            <option value="">All Time</option>
+            <option value="" className="bg-[#1a1f2e] text-white">All Time</option>
             {GAME_REGISTRY.map(g => (
-              <option key={g.game.id} value={g.game.id}>
+              <option key={g.game.id} value={g.game.id} className="bg-[#1a1f2e] text-white">
                 {g.game.hostCity} {g.game.year}
               </option>
             ))}
@@ -282,39 +282,46 @@ export default function Leaderboard() {
         {/* Current players only toggle */}
         <button
           onClick={() => setCurrentOnly(v => !v)}
-          className={`px-3 py-2 rounded-xl text-sm font-medium border transition-all ${
+          className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium border transition-all ${
             currentOnly
               ? 'bg-accent-blue/10 border-accent-blue/40 text-accent-blue'
               : 'bg-transparent border-bg-border text-white/50 hover:text-white'
           }`}
         >
-          Current players only
+          <span className={`w-7 h-4 rounded-full relative transition-colors flex-shrink-0 ${currentOnly ? 'bg-accent-blue' : 'bg-white/20'}`}>
+            <span className={`absolute top-0.5 w-3 h-3 rounded-full bg-white shadow transition-all ${currentOnly ? 'left-3.5' : 'left-0.5'}`} />
+          </span>
+          Current Players
         </button>
 
-        {/* All updates toggle — only visible when chart is shown */}
-        {showChart && (
-          <button
-            onClick={() => setShowAllUpdates(v => !v)}
-            className={`px-3 py-2 rounded-xl text-sm font-medium border transition-all ${
-              showAllUpdates
-                ? 'bg-accent-blue/10 border-accent-blue/40 text-accent-blue'
-                : 'bg-transparent border-bg-border text-white/50 hover:text-white'
-            }`}
-          >
-            Show all updates
-          </button>
-        )}
+        {/* All updates toggle — always rendered to avoid layout jump */}
+        <button
+          onClick={() => setShowAllUpdates(v => !v)}
+          className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium border transition-all ${
+            showAllUpdates
+              ? 'bg-accent-blue/10 border-accent-blue/40 text-accent-blue'
+              : 'bg-transparent border-bg-border text-white/50 hover:text-white'
+          }`}
+        >
+          <span className={`w-7 h-4 rounded-full relative transition-colors flex-shrink-0 ${showAllUpdates ? 'bg-accent-blue' : 'bg-white/20'}`}>
+            <span className={`absolute top-0.5 w-3 h-3 rounded-full bg-white shadow transition-all ${showAllUpdates ? 'left-3.5' : 'left-0.5'}`} />
+          </span>
+          All Updates
+        </button>
 
         {/* Chart toggle */}
         <button
           onClick={() => setShowChart(v => !v)}
-          className={`px-3 py-2 rounded-xl text-sm font-medium border transition-all ${
+          className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium border transition-all ${
             showChart
-              ? 'bg-white/5 border-white/20 text-white'
-              : 'bg-transparent border-bg-border text-white/40 hover:text-white'
+              ? 'bg-accent-blue/10 border-accent-blue/40 text-accent-blue'
+              : 'bg-transparent border-bg-border text-white/50 hover:text-white'
           }`}
         >
-          {showChart ? 'Hide Chart' : 'Show Chart'}
+          <span className={`w-7 h-4 rounded-full relative transition-colors flex-shrink-0 ${showChart ? 'bg-accent-blue' : 'bg-white/20'}`}>
+            <span className={`absolute top-0.5 w-3 h-3 rounded-full bg-white shadow transition-all ${showChart ? 'left-3.5' : 'left-0.5'}`} />
+          </span>
+          Chart
         </button>
       </div>
 
