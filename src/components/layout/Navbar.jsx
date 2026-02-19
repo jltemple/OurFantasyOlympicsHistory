@@ -12,7 +12,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 font-bold text-lg tracking-tight text-white hover:text-accent-blue transition-colors">
           <span className="text-2xl">🏅</span>
-          <span>Fantasy Olympics</span>
+          <span>Marcus' Fantasy Olympics</span>
         </Link>
 
         {/* Nav links */}
