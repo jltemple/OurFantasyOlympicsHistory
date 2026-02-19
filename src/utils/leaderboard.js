@@ -79,6 +79,50 @@ export function computeAllTimeStats(players, fromGameId) {
 }
 
 /**
+ * Builds a simple per-game cumulative series (one point per game).
+ * Shape: [{ gameLabel, gameId, [playerId]: cumulativeScore|null, ... }, ...]
+ *
+ * Players who haven't joined yet get null (key absent → line not started).
+ * Players who sat out a game keep their last cumulative value (flat line).
+ */
+export function buildGameSeries(fromGameId) {
+  const games = filterGamesFrom(fromGameId)
+  if (!games.length) return []
+
+  const activePlayerIds = new Set()
+  games.forEach(gameData => {
+    gameData.playerMappings?.forEach(m => activePlayerIds.add(m.playerId))
+  })
+
+  const cumulative = {}
+  activePlayerIds.forEach(pid => { cumulative[pid] = 0 })
+
+  return games.map(gameData => {
+    const { game } = gameData
+    const gamePlayers = new Set(gameData.playerMappings?.map(m => m.playerId) ?? [])
+
+    const point = {
+      gameLabel: `${game.hostCity} '${String(game.year).slice(2)}`,
+      gameId: game.id,
+    }
+
+    activePlayerIds.forEach(pid => {
+      const result = getPlayerFinalResult(gameData, pid)
+      if (result) {
+        cumulative[pid] += result.totalScore
+        point[pid] = cumulative[pid]
+      } else if (cumulative[pid] > 0) {
+        // Played before, sat this one out — hold flat
+        point[pid] = cumulative[pid]
+      }
+      // else hasn't joined yet — key absent, line not started
+    })
+
+    return point
+  })
+}
+
+/**
  * Builds a snapshot-level cumulative series across all games in the filtered range.
  *
  * One data point per snapshot (across all games), so the chart shows every update day

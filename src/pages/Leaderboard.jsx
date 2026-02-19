@@ -85,6 +85,31 @@ function makeTickFormatter(gameRegions) {
   return (idx) => midpoints[idx] ?? ''
 }
 
+// ── Simple per-game tooltip ────────────────────────────────────────────────────
+function GameSeriesTooltip({ active, payload, label }) {
+  if (!active || !payload?.length) return null
+  const sorted = [...payload]
+    .filter(p => p.value !== null && p.value !== undefined)
+    .sort((a, b) => b.value - a.value)
+
+  return (
+    <div className="bg-bg-card border border-bg-border rounded-xl p-3 shadow-card text-sm min-w-[200px]">
+      <p className="text-white/50 font-medium mb-2 text-xs">{label}</p>
+      {sorted.map(entry => (
+        <div key={entry.dataKey} className="flex items-center justify-between gap-4 py-0.5">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: entry.color }} />
+            <span className="text-white/80 text-xs">
+              {PLAYER_MAP[entry.dataKey]?.displayName ?? entry.dataKey}
+            </span>
+          </div>
+          <span className="font-semibold text-white tabular-nums text-xs">{entry.value}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 // ── Game result badge in expanded row ─────────────────────────────────────────
 function GameResultBadge({ result }) {
   const medalColor =
@@ -166,24 +191,26 @@ export default function Leaderboard() {
   const [fromGameId,         setFromGameId]          = useState(null)
   const [expandedId,         setExpandedId]          = useState(null)
   const [showChart,          setShowChart]           = useState(true)
+  const [showAllUpdates,     setShowAllUpdates]      = useState(false)
   const [currentOnly,        setCurrentOnly]         = useState(false)
 
-  const { rows, series, gameRegions, lastGamePlayerIds } =
+  const { rows, series, gameSeries, gameRegions, lastGamePlayerIds } =
     useLeaderboard(fromGameId, mode, currentOnly)
 
-  // Derive which playerIds to draw lines for
+  // Derive which playerIds to draw lines for (works for both chart modes)
   const chartPlayerIds = useMemo(() => {
-    if (!series.length) return []
-    const metaKeys = new Set(['idx', 'gameId', 'gameName', 'season', 'dayLabel', 'date'])
+    const metaKeys = new Set(['idx', 'gameId', 'gameName', 'gameLabel', 'season', 'dayLabel', 'date'])
+    const sourceSeries = showAllUpdates ? series : gameSeries
+    if (!sourceSeries.length) return []
     const allKeys = new Set()
-    series.forEach(point => {
+    sourceSeries.forEach(point => {
       Object.keys(point).forEach(k => { if (!metaKeys.has(k)) allKeys.add(k) })
     })
     if (currentOnly) {
       return [...allKeys].filter(pid => lastGamePlayerIds.has(pid))
     }
     return [...allKeys]
-  }, [series, currentOnly, lastGamePlayerIds])
+  }, [series, gameSeries, showAllUpdates, currentOnly, lastGamePlayerIds])
 
   const tickFormatter = useMemo(() => makeTickFormatter(gameRegions), [gameRegions])
 
@@ -264,6 +291,20 @@ export default function Leaderboard() {
           Current players only
         </button>
 
+        {/* All updates toggle — only visible when chart is shown */}
+        {showChart && (
+          <button
+            onClick={() => setShowAllUpdates(v => !v)}
+            className={`px-3 py-2 rounded-xl text-sm font-medium border transition-all ${
+              showAllUpdates
+                ? 'bg-accent-blue/10 border-accent-blue/40 text-accent-blue'
+                : 'bg-transparent border-bg-border text-white/50 hover:text-white'
+            }`}
+          >
+            Show all updates
+          </button>
+        )}
+
         {/* Chart toggle */}
         <button
           onClick={() => setShowChart(v => !v)}
@@ -277,75 +318,87 @@ export default function Leaderboard() {
         </button>
       </div>
 
-      {/* Snapshot chart with game region shading */}
-      {showChart && series.length > 0 && (
+      {/* Chart — two modes */}
+      {showChart && (
         <div className="card p-4 sm:p-6 mb-6">
           <h2 className="text-sm font-semibold text-white/60 uppercase tracking-wider mb-1">
-            Cumulative Score — Every Update
+            Cumulative Score Progression
           </h2>
-          <p className="text-xs text-white/30 mb-4">
-            Shaded bands = each Olympics · hover for game &amp; day detail
-          </p>
-          <ResponsiveContainer width="100%" height={400}>
-            <LineChart data={series} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+          {showAllUpdates && (
+            <p className="text-xs text-white/30 mb-4">
+              Every update day shown · shaded bands = each Olympics · hover for detail
+            </p>
+          )}
 
-              {/* Game region shading — drawn first so lines render on top */}
-              {gameRegions.map((region, i) => (
-                <ReferenceArea
-                  key={region.gameId}
-                  x1={region.startIdx}
-                  x2={region.endIdx}
-                  fill={REGION_FILLS[i % REGION_FILLS.length]}
-                  stroke="none"
-                  label={{
-                    value: `${region.gameName.split(' ')[0]} '${String(region.year).slice(2)}`,
-                    position: 'insideTop',
-                    fill: 'rgba(255,255,255,0.18)',
-                    fontSize: 11,
-                    fontWeight: 600,
-                  }}
+          {showAllUpdates ? (
+            /* ── Dense snapshot chart ── */
+            <ResponsiveContainer width="100%" height={400}>
+              <LineChart data={series} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+                {gameRegions.map((region, i) => (
+                  <ReferenceArea
+                    key={region.gameId}
+                    x1={region.startIdx}
+                    x2={region.endIdx}
+                    fill={REGION_FILLS[i % REGION_FILLS.length]}
+                    stroke="none"
+                    label={{
+                      value: `${region.gameName.split(' ')[0]} '${String(region.year).slice(2)}`,
+                      position: 'insideTop',
+                      fill: 'rgba(255,255,255,0.18)',
+                      fontSize: 11,
+                      fontWeight: 600,
+                    }}
+                  />
+                ))}
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
+                <XAxis
+                  dataKey="idx"
+                  type="number"
+                  domain={['dataMin', 'dataMax']}
+                  tickFormatter={tickFormatter}
+                  tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 11 }}
+                  axisLine={{ stroke: 'rgba(255,255,255,0.08)' }}
+                  tickLine={false}
+                  interval={0}
+                  ticks={gameRegions.map(r => Math.round((r.startIdx + r.endIdx) / 2))}
                 />
-              ))}
-
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
-
-              <XAxis
-                dataKey="idx"
-                type="number"
-                domain={['dataMin', 'dataMax']}
-                tickFormatter={tickFormatter}
-                tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 11 }}
-                axisLine={{ stroke: 'rgba(255,255,255,0.08)' }}
-                tickLine={false}
-                interval={0}
-                ticks={gameRegions.map(r => Math.round((r.startIdx + r.endIdx) / 2))}
-              />
-
-              <YAxis
-                tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12 }}
-                axisLine={false}
-                tickLine={false}
-                width={45}
-              />
-
-              <Tooltip content={<SnapshotTooltip />} />
-              <Legend content={<ChartLegend />} />
-
-              {chartPlayerIds.map(pid => (
-                <Line
-                  key={pid}
-                  type="monotone"
-                  dataKey={pid}
-                  stroke={PLAYER_COLORS[pid] ?? '#6b7280'}
-                  strokeWidth={2}
-                  dot={false}
-                  activeDot={{ r: 4, strokeWidth: 0 }}
-                  connectNulls
-                  isAnimationActive={false}
+                <YAxis tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12 }} axisLine={false} tickLine={false} width={45} />
+                <Tooltip content={<SnapshotTooltip />} />
+                <Legend content={<ChartLegend />} />
+                {chartPlayerIds.map(pid => (
+                  <Line key={pid} type="monotone" dataKey={pid}
+                    stroke={PLAYER_COLORS[pid] ?? '#6b7280'} strokeWidth={2}
+                    dot={false} activeDot={{ r: 4, strokeWidth: 0 }}
+                    connectNulls isAnimationActive={false}
+                  />
+                ))}
+              </LineChart>
+            </ResponsiveContainer>
+          ) : (
+            /* ── Simple per-game chart ── */
+            <ResponsiveContainer width="100%" height={400}>
+              <LineChart data={gameSeries} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <XAxis
+                  dataKey="gameLabel"
+                  tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12 }}
+                  axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
+                  tickLine={false}
                 />
-              ))}
-            </LineChart>
-          </ResponsiveContainer>
+                <YAxis tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12 }} axisLine={false} tickLine={false} width={45} />
+                <Tooltip content={<GameSeriesTooltip />} />
+                <Legend content={<ChartLegend />} />
+                {chartPlayerIds.map(pid => (
+                  <Line key={pid} type="monotone" dataKey={pid}
+                    stroke={PLAYER_COLORS[pid] ?? '#6b7280'} strokeWidth={2}
+                    dot={{ r: 3, strokeWidth: 0, fill: PLAYER_COLORS[pid] ?? '#6b7280' }}
+                    activeDot={{ r: 5, strokeWidth: 0 }}
+                    connectNulls
+                  />
+                ))}
+              </LineChart>
+            </ResponsiveContainer>
+          )}
         </div>
       )}
 
