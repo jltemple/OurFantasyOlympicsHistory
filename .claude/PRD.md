@@ -29,6 +29,8 @@ Players joined at different times, so the "all-time" leaderboard must support a 
 
 Each player is identified by a `playerId` and shown by their real first name (`displayName`) everywhere in the app. Player roster varies by game — not all players participated in every Olympics.
 
+> Tokyo 2020 had **Pat, Andrea, Sal** instead of **Miles, Jon, Bryan** (who appear in Paris 2024).
+
 ---
 
 ## Data Model
@@ -388,9 +390,9 @@ Sports lists for Rio 2016, PyeongChang 2018, Tokyo 2020, Beijing 2022, Milano Co
 3. ~~**Hosting**~~ ✅ Vercel
 4. ~~**Games played**~~ ✅ Sochi 2014, Rio 2016, PyeongChang 2018, Tokyo 2020, Beijing 2022, Paris 2024, Milano Cortina 2026
 5. ~~**Leaderboard scoring**~~ ✅ Raw score totals + Points per Medal Event (score ÷ sports drafted) toggle
-6. ~~**Display names**~~ ✅ Always show real first names; always show real first names
+6. ~~**Display names**~~ ✅ Always show real first names
 7. ~~**Sports list data**~~ ✅ Available for Rio 2016 onward; Sochi 2014 is standings-only
-9. **Breaking** — Was this sport included in any games other than Paris 2024? (Dropped after 2024)
+8. **Breaking** — Was this sport included in any games other than Paris 2024? (Dropped after 2024)
 10. ~~**Sochi 2014 sport count**~~ ✅ All medal event counts confirmed from Wikipedia/Olympics.com (see table in leaderboard section)
 
 ---
