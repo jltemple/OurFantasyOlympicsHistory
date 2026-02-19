@@ -12,18 +12,18 @@
     "medalEvents": 329
   },
   "playerMappings": [
-    { "playerId": "marcus" },
-    { "playerId": "laura" },
-    { "playerId": "josh" },
+    { "playerId": "marcus"  },
+    { "playerId": "laura"   },
+    { "playerId": "josh"    },
     { "playerId": "jessica" },
-    { "playerId": "leah" },
+    { "playerId": "leah"    },
     { "playerId": "brandon" },
-    { "playerId": "miles" },
-    { "playerId": "jon" },
-    { "playerId": "emalee" },
-    { "playerId": "casey" },
-    { "playerId": "katie" },
-    { "playerId": "bryan" }
+    { "playerId": "miles"   },
+    { "playerId": "jon"     },
+    { "playerId": "emalee"  },
+    { "playerId": "casey"   },
+    { "playerId": "katie"   },
+    { "playerId": "bryan"   }
   ],
   "rosters": [
     {
