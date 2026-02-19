@@ -51,7 +51,6 @@ export default function RosterDetail() {
 
   const { game, rosters } = gameData
   const player    = PLAYER_MAP[playerId]
-  const teamName  = playerMappingsMap.get(playerId)
   const standing  = finalStandings.find(r => r.playerId === playerId)
   const rosterObj = rosters?.find(r => r.playerId === playerId)
 
@@ -105,9 +104,6 @@ export default function RosterDetail() {
               {player?.displayName ?? playerId}
             </h1>
           </div>
-          {teamName && (
-            <p className="text-white/40 text-sm ml-[22px]">{teamName}</p>
-          )}
         </div>
 
         {/* Final result stats */}

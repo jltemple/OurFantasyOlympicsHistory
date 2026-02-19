@@ -18,17 +18,6 @@ export function filterGamesFrom(fromGameId) {
 /**
  * Computes all-time stats for every player across the filtered game range.
  * Only includes players who actually participated in at least one game in range.
- *
- * Returns array of:
- * {
- *   playerId, displayName,
- *   gamesPlayed, totalGold, totalSilver, totalBronze, totalScore,
- *   medalEvents,       // sum of game.medalEvents for games played
- *   ptsPerMedalEvent,  // totalScore / medalEvents (null if medalEvents === 0)
- *   bestFinish,        // lowest rank number (1 is best)
- *   worstFinish,       // highest rank number
- *   gameResults: [{ gameId, gameName, rank, score }]
- * }
  */
 export function computeAllTimeStats(players, fromGameId) {
   const games = filterGamesFrom(fromGameId)
@@ -90,43 +79,117 @@ export function computeAllTimeStats(players, fromGameId) {
 }
 
 /**
- * Builds a Recharts-compatible cumulative score series across games.
- * Shape: [{ gameLabel, [playerId]: cumulativeScore, ... }, ...]
+ * Builds a snapshot-level cumulative series across all games in the filtered range.
  *
- * Only players present in at least one game in the range are included.
- * Players not yet present in a game get null for that entry.
+ * One data point per snapshot (across all games), so the chart shows every update day
+ * and game regions can be shaded with ReferenceArea.
+ *
+ * Returns:
+ * {
+ *   series: [{
+ *     idx,        // global x-axis index
+ *     gameId,
+ *     gameName,
+ *     season,
+ *     dayLabel,
+ *     date,
+ *     [playerId]: cumulativeScore | null | undefined
+ *       // null  = in this game but missing from this snapshot (bridged by connectNulls)
+ *       // undefined (key absent) = player not yet in the league (line not started)
+ *       // number = cumulative total
+ *   }]
+ *
+ *   gameRegions: [{
+ *     gameId, gameName, season, year,
+ *     startIdx, endIdx   // inclusive x-axis indices for ReferenceArea
+ *   }]
+ *
+ *   activePlayerIds: Set<playerId>  — all players in any game in range
+ *   lastGamePlayerIds: Set<playerId> — players in the final game (= "current" players)
+ * }
  */
-export function buildCumulativeSeries(players, fromGameId) {
+export function buildSnapshotSeries(fromGameId) {
   const games = filterGamesFrom(fromGameId)
+  if (!games.length) {
+    return { series: [], gameRegions: [], activePlayerIds: new Set(), lastGamePlayerIds: new Set() }
+  }
 
-  // Determine which players appear in any game in range
+  // All players across any game in range
   const activePlayerIds = new Set()
   games.forEach(gameData => {
     gameData.playerMappings?.forEach(m => activePlayerIds.add(m.playerId))
   })
 
-  // Running cumulative totals per player
+  // "Current" players = those in the most recent game
+  const lastGame = games[games.length - 1]
+  const lastGamePlayerIds = new Set(lastGame.playerMappings?.map(m => m.playerId) ?? [])
+
+  // Running cumulative total committed after each game completes
   const cumulative = {}
   activePlayerIds.forEach(pid => { cumulative[pid] = 0 })
 
-  return games.map(gameData => {
-    const point = {
-      gameLabel: `${gameData.game.hostCity} '${String(gameData.game.year).slice(2)}`,
-      gameId: gameData.game.id,
-    }
+  const series = []
+  const gameRegions = []
+  let globalIdx = 0
 
-    activePlayerIds.forEach(pid => {
-      const result = getPlayerFinalResult(gameData, pid)
-      if (result) {
-        cumulative[pid] += result.totalScore
-        point[pid] = cumulative[pid]
-      } else {
-        // Player not in this game — carry forward their cumulative if they've started,
-        // otherwise null (they haven't joined yet)
-        point[pid] = cumulative[pid] > 0 ? cumulative[pid] : null
+  games.forEach(gameData => {
+    const { game, snapshots } = gameData
+    if (!snapshots?.length) return
+
+    const gamePlayers = new Set(gameData.playerMappings?.map(m => m.playerId) ?? [])
+
+    // Each player's committed total before this game starts
+    const priorCumulative = {}
+    gamePlayers.forEach(pid => { priorCumulative[pid] = cumulative[pid] })
+
+    const regionStart = globalIdx
+
+    snapshots.forEach(snapshot => {
+      const scoreMap = {}
+      snapshot.standings.forEach(row => { scoreMap[row.playerId] = row.totalScore })
+
+      const point = {
+        idx:      globalIdx,
+        gameId:   game.id,
+        gameName: game.name,
+        season:   game.season,
+        dayLabel: snapshot.dayLabel,
+        date:     snapshot.date,
+      }
+
+      activePlayerIds.forEach(pid => {
+        if (gamePlayers.has(pid)) {
+          // In this game: cumulative = prior total + this game's running score
+          const gameScore = scoreMap[pid] ?? null
+          point[pid] = gameScore !== null ? priorCumulative[pid] + gameScore : null
+        } else if (cumulative[pid] > 0) {
+          // Played before but sat this game out: hold their last value flat
+          point[pid] = cumulative[pid]
+        }
+        // else: player hasn't joined yet — key is absent, line not yet started
+      })
+
+      series.push(point)
+      globalIdx++
+    })
+
+    // Commit final scores after all snapshots for this game
+    const finalSnap = snapshots[snapshots.length - 1]
+    finalSnap.standings.forEach(row => {
+      if (gamePlayers.has(row.playerId)) {
+        cumulative[row.playerId] = priorCumulative[row.playerId] + row.totalScore
       }
     })
 
-    return point
+    gameRegions.push({
+      gameId:   game.id,
+      gameName: game.name,
+      season:   game.season,
+      year:     game.year,
+      startIdx: regionStart,
+      endIdx:   globalIdx - 1,
+    })
   })
+
+  return { series, gameRegions, activePlayerIds, lastGamePlayerIds }
 }

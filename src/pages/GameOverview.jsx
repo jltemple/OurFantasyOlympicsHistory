@@ -16,7 +16,7 @@ const TABS = [
 ]
 
 // ── Standings Tab ─────────────────────────────────────────────────────────────
-function StandingsTab({ finalStandings, playerMappingsMap }) {
+function StandingsTab({ finalStandings }) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
@@ -24,7 +24,6 @@ function StandingsTab({ finalStandings, playerMappingsMap }) {
           <tr className="text-white/40 text-xs uppercase tracking-wider border-b border-bg-border">
             <th className="text-left py-3 pl-4 w-12">Rank</th>
             <th className="text-left py-3 pl-3">Player</th>
-            <th className="text-left py-3 pl-3 hidden sm:table-cell">Team Name</th>
             <th className="text-right py-3 pr-4">🥇</th>
             <th className="text-right py-3 pr-4">🥈</th>
             <th className="text-right py-3 pr-4">🥉</th>
@@ -34,7 +33,6 @@ function StandingsTab({ finalStandings, playerMappingsMap }) {
         <tbody className="divide-y divide-bg-border">
           {finalStandings.map(row => {
             const player = PLAYER_MAP[row.playerId]
-            const teamName = playerMappingsMap.get(row.playerId)
             const isTop3 = row.rank <= 3
             return (
               <tr
@@ -51,9 +49,6 @@ function StandingsTab({ finalStandings, playerMappingsMap }) {
                       {player?.displayName ?? row.playerId}
                     </span>
                   </div>
-                </td>
-                <td className="py-3.5 pl-3 hidden sm:table-cell text-white/40 text-xs">
-                  {teamName ?? '—'}
                 </td>
                 <td className="py-3.5 pr-4 text-right text-accent-gold font-medium tabular-nums">{row.gold}</td>
                 <td className="py-3.5 pr-4 text-right text-accent-silver font-medium tabular-nums">{row.silver}</td>
@@ -114,7 +109,6 @@ function RostersTab({ gameData, playerMappingsMap, gameId }) {
                 <p className="font-semibold text-white truncate">
                   {player?.displayName ?? mapping.playerId}
                 </p>
-                <p className="text-xs text-white/40 truncate mt-0.5">{mapping.teamName}</p>
               </div>
             </div>
             {hasRoster ? (
@@ -200,10 +194,7 @@ export default function GameOverview() {
         </div>
         <div className="p-4 sm:p-6">
           {activeTab === 'standings' && (
-            <StandingsTab
-              finalStandings={finalStandings}
-              playerMappingsMap={playerMappingsMap}
-            />
+            <StandingsTab finalStandings={finalStandings} />
           )}
           {activeTab === 'progress' && (
             <ProgressTab gameData={gameData} />

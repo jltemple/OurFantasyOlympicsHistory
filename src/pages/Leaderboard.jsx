@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid,
-  Tooltip, Legend, ResponsiveContainer,
+  Tooltip, Legend, ResponsiveContainer, ReferenceArea,
 } from 'recharts'
 import { useLeaderboard } from '../hooks/useLeaderboard'
 import { GAME_REGISTRY } from '../data/gameRegistry'
@@ -11,16 +11,36 @@ import PageWrapper from '../components/layout/PageWrapper'
 import PlayerColorDot from '../components/ui/PlayerColorDot'
 import TrophyIcon from '../components/ui/TrophyIcon'
 
-// ── Cumulative chart tooltip ───────────────────────────────────────────────────
-function CumulativeTooltip({ active, payload, label }) {
+// ── Game region colors (alternating bands, Summer/Winter tints) ───────────────
+const REGION_FILLS = [
+  'rgba(59,130,246,0.06)',   // blue
+  'rgba(148,163,184,0.06)',  // silver
+  'rgba(59,130,246,0.06)',
+  'rgba(148,163,184,0.06)',
+  'rgba(59,130,246,0.06)',
+  'rgba(148,163,184,0.06)',
+]
+
+// ── Snapshot chart tooltip ─────────────────────────────────────────────────────
+function SnapshotTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null
+
+  // Pull game context from the first payload item
+  const point = payload[0]?.payload
+  if (!point) return null
+
   const sorted = [...payload]
     .filter(p => p.value !== null && p.value !== undefined)
     .sort((a, b) => b.value - a.value)
 
   return (
-    <div className="bg-bg-card border border-bg-border rounded-xl p-3 shadow-card text-sm min-w-[200px]">
-      <p className="text-white/50 font-medium mb-2">{label}</p>
+    <div className="bg-bg-card border border-bg-border rounded-xl p-3 shadow-card text-sm min-w-[220px] max-w-[280px]">
+      {/* Game + day header */}
+      <div className="mb-2 pb-2 border-b border-bg-border">
+        <p className="text-white/80 font-semibold text-xs">{point.gameName}</p>
+        <p className="text-white/40 text-xs mt-0.5">{point.dayLabel}</p>
+      </div>
+      {/* Player scores */}
       {sorted.map(entry => (
         <div key={entry.dataKey} className="flex items-center justify-between gap-4 py-0.5">
           <div className="flex items-center gap-2">
@@ -28,18 +48,18 @@ function CumulativeTooltip({ active, payload, label }) {
               className="w-2 h-2 rounded-full flex-shrink-0"
               style={{ backgroundColor: entry.color }}
             />
-            <span className="text-white/80">
+            <span className="text-white/80 text-xs">
               {PLAYER_MAP[entry.dataKey]?.displayName ?? entry.dataKey}
             </span>
           </div>
-          <span className="font-semibold text-white tabular-nums">{entry.value}</span>
+          <span className="font-semibold text-white tabular-nums text-xs">{entry.value}</span>
         </div>
       ))}
     </div>
   )
 }
 
-function CumulativeLegend({ payload }) {
+function ChartLegend({ payload }) {
   return (
     <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center mt-2">
       {payload?.map(entry => (
@@ -53,6 +73,16 @@ function CumulativeLegend({ payload }) {
       ))}
     </div>
   )
+}
+
+// ── X-axis tick: only show the game label at the midpoint of each region ───────
+function makeTickFormatter(gameRegions) {
+  const midpoints = {}
+  gameRegions.forEach(r => {
+    const mid = Math.round((r.startIdx + r.endIdx) / 2)
+    midpoints[mid] = `${r.gameName.split(' ')[0]} '${String(r.year).slice(2)}`
+  })
+  return (idx) => midpoints[idx] ?? ''
 }
 
 // ── Game result badge in expanded row ─────────────────────────────────────────
@@ -84,25 +114,18 @@ function LeaderboardRow({ row, mode, isExpanded, onToggle }) {
         className={`table-row-hover cursor-pointer select-none ${isTop3 ? 'bg-white/[0.02]' : ''} ${isExpanded ? 'bg-white/[0.04]' : ''}`}
         onClick={onToggle}
       >
-        {/* Rank */}
         <td className="py-3.5 pl-4 w-12">
           <TrophyIcon rank={row.rank} />
         </td>
-
-        {/* Player */}
         <td className="py-3.5 pl-3">
           <div className="flex items-center gap-2">
             <PlayerColorDot playerId={row.playerId} />
             <span className="font-semibold text-white">{row.displayName}</span>
           </div>
         </td>
-
-        {/* Games played */}
         <td className="py-3.5 pr-4 text-center text-white/50 tabular-nums hidden sm:table-cell">
           {row.gamesPlayed}
         </td>
-
-        {/* Medal counts */}
         <td className="py-3.5 pr-4 text-right text-accent-gold font-medium tabular-nums">
           {row.totalGold}
         </td>
@@ -112,19 +135,9 @@ function LeaderboardRow({ row, mode, isExpanded, onToggle }) {
         <td className="py-3.5 pr-4 text-right text-accent-bronze font-medium tabular-nums">
           {row.totalBronze}
         </td>
-
-        {/* Score / pts per event */}
-        {mode === 'raw' ? (
-          <td className="py-3.5 pr-4 text-right font-bold text-white tabular-nums">
-            {row.totalScore}
-          </td>
-        ) : (
-          <td className="py-3.5 pr-4 text-right font-bold text-white tabular-nums">
-            {row.ptsPerMedalEvent?.toFixed(2) ?? '—'}
-          </td>
-        )}
-
-        {/* Expand chevron */}
+        <td className="py-3.5 pr-4 text-right font-bold text-white tabular-nums">
+          {mode === 'raw' ? row.totalScore : (row.ptsPerMedalEvent?.toFixed(2) ?? '—')}
+        </td>
         <td className="py-3.5 pr-4 text-right w-8">
           <span className={`text-white/25 text-xs transition-transform inline-block ${isExpanded ? 'rotate-180' : ''}`}>
             ▾
@@ -132,7 +145,6 @@ function LeaderboardRow({ row, mode, isExpanded, onToggle }) {
         </td>
       </tr>
 
-      {/* Expanded game-by-game breakdown */}
       {isExpanded && (
         <tr>
           <td colSpan={8} className="pb-4 px-4 sm:px-8">
@@ -150,18 +162,30 @@ function LeaderboardRow({ row, mode, isExpanded, onToggle }) {
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default function Leaderboard() {
-  const [mode,        setMode]        = useState('raw')        // 'raw' | 'perEvent'
-  const [fromGameId,  setFromGameId]  = useState(null)         // null = all time
-  const [expandedId,  setExpandedId]  = useState(null)
-  const [showChart,   setShowChart]   = useState(true)
+  const [mode,               setMode]               = useState('raw')
+  const [fromGameId,         setFromGameId]          = useState(null)
+  const [expandedId,         setExpandedId]          = useState(null)
+  const [showChart,          setShowChart]           = useState(true)
+  const [currentOnly,        setCurrentOnly]         = useState(false)
 
-  const { rows, cumulativeSeries } = useLeaderboard(fromGameId, mode)
+  const { rows, series, gameRegions, lastGamePlayerIds } =
+    useLeaderboard(fromGameId, mode, currentOnly)
 
-  // All playerIds that appear in the chart
+  // Derive which playerIds to draw lines for
   const chartPlayerIds = useMemo(() => {
-    if (!cumulativeSeries.length) return []
-    return Object.keys(cumulativeSeries[0]).filter(k => k !== 'gameLabel' && k !== 'gameId')
-  }, [cumulativeSeries])
+    if (!series.length) return []
+    const metaKeys = new Set(['idx', 'gameId', 'gameName', 'season', 'dayLabel', 'date'])
+    const allKeys = new Set()
+    series.forEach(point => {
+      Object.keys(point).forEach(k => { if (!metaKeys.has(k)) allKeys.add(k) })
+    })
+    if (currentOnly) {
+      return [...allKeys].filter(pid => lastGamePlayerIds.has(pid))
+    }
+    return [...allKeys]
+  }, [series, currentOnly, lastGamePlayerIds])
+
+  const tickFormatter = useMemo(() => makeTickFormatter(gameRegions), [gameRegions])
 
   function toggleExpand(playerId) {
     setExpandedId(prev => (prev === playerId ? null : playerId))
@@ -190,9 +214,7 @@ export default function Leaderboard() {
           <button
             onClick={() => setMode('raw')}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-              mode === 'raw'
-                ? 'bg-accent-blue/20 text-accent-blue'
-                : 'text-white/50 hover:text-white'
+              mode === 'raw' ? 'bg-accent-blue/20 text-accent-blue' : 'text-white/50 hover:text-white'
             }`}
           >
             Raw Score
@@ -200,9 +222,7 @@ export default function Leaderboard() {
           <button
             onClick={() => setMode('perEvent')}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-              mode === 'perEvent'
-                ? 'bg-accent-blue/20 text-accent-blue'
-                : 'text-white/50 hover:text-white'
+              mode === 'perEvent' ? 'bg-accent-blue/20 text-accent-blue' : 'text-white/50 hover:text-white'
             }`}
           >
             Pts / Medal Event
@@ -220,7 +240,7 @@ export default function Leaderboard() {
               setFromGameId(e.target.value || null)
               setExpandedId(null)
             }}
-            className="bg-transparent text-white text-sm px-3 py-2 pr-8 appearance-none cursor-pointer focus:outline-none"
+            className="bg-transparent text-white text-sm px-3 py-2 appearance-none cursor-pointer focus:outline-none"
             style={{ backgroundImage: 'none' }}
           >
             <option value="">All Time</option>
@@ -232,6 +252,18 @@ export default function Leaderboard() {
           </select>
         </div>
 
+        {/* Current players only toggle */}
+        <button
+          onClick={() => setCurrentOnly(v => !v)}
+          className={`px-3 py-2 rounded-xl text-sm font-medium border transition-all ${
+            currentOnly
+              ? 'bg-accent-blue/10 border-accent-blue/40 text-accent-blue'
+              : 'bg-transparent border-bg-border text-white/50 hover:text-white'
+          }`}
+        >
+          Current players only
+        </button>
+
         {/* Chart toggle */}
         <button
           onClick={() => setShowChart(v => !v)}
@@ -241,33 +273,64 @@ export default function Leaderboard() {
               : 'bg-transparent border-bg-border text-white/40 hover:text-white'
           }`}
         >
-          {showChart ? '📈 Hide Chart' : '📈 Show Chart'}
+          {showChart ? 'Hide Chart' : 'Show Chart'}
         </button>
       </div>
 
-      {/* Cumulative chart */}
-      {showChart && cumulativeSeries.length > 0 && (
+      {/* Snapshot chart with game region shading */}
+      {showChart && series.length > 0 && (
         <div className="card p-4 sm:p-6 mb-6">
-          <h2 className="text-sm font-semibold text-white/60 uppercase tracking-wider mb-4">
-            Cumulative Score Progression
+          <h2 className="text-sm font-semibold text-white/60 uppercase tracking-wider mb-1">
+            Cumulative Score — Every Update
           </h2>
-          <ResponsiveContainer width="100%" height={360}>
-            <LineChart data={cumulativeSeries} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+          <p className="text-xs text-white/30 mb-4">
+            Shaded bands = each Olympics · hover for game &amp; day detail
+          </p>
+          <ResponsiveContainer width="100%" height={400}>
+            <LineChart data={series} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+
+              {/* Game region shading — drawn first so lines render on top */}
+              {gameRegions.map((region, i) => (
+                <ReferenceArea
+                  key={region.gameId}
+                  x1={region.startIdx}
+                  x2={region.endIdx}
+                  fill={REGION_FILLS[i % REGION_FILLS.length]}
+                  stroke="none"
+                  label={{
+                    value: `${region.gameName.split(' ')[0]} '${String(region.year).slice(2)}`,
+                    position: 'insideTop',
+                    fill: 'rgba(255,255,255,0.18)',
+                    fontSize: 11,
+                    fontWeight: 600,
+                  }}
+                />
+              ))}
+
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
+
               <XAxis
-                dataKey="gameLabel"
-                tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12 }}
-                axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
+                dataKey="idx"
+                type="number"
+                domain={['dataMin', 'dataMax']}
+                tickFormatter={tickFormatter}
+                tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 11 }}
+                axisLine={{ stroke: 'rgba(255,255,255,0.08)' }}
                 tickLine={false}
+                interval={0}
+                ticks={gameRegions.map(r => Math.round((r.startIdx + r.endIdx) / 2))}
               />
+
               <YAxis
                 tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
                 width={45}
               />
-              <Tooltip content={<CumulativeTooltip />} />
-              <Legend content={<CumulativeLegend />} />
+
+              <Tooltip content={<SnapshotTooltip />} />
+              <Legend content={<ChartLegend />} />
+
               {chartPlayerIds.map(pid => (
                 <Line
                   key={pid}
@@ -275,9 +338,10 @@ export default function Leaderboard() {
                   dataKey={pid}
                   stroke={PLAYER_COLORS[pid] ?? '#6b7280'}
                   strokeWidth={2}
-                  dot={{ r: 3, strokeWidth: 0, fill: PLAYER_COLORS[pid] ?? '#6b7280' }}
-                  activeDot={{ r: 5, strokeWidth: 0 }}
+                  dot={false}
+                  activeDot={{ r: 4, strokeWidth: 0 }}
                   connectNulls
+                  isAnimationActive={false}
                 />
               ))}
             </LineChart>
@@ -315,7 +379,6 @@ export default function Leaderboard() {
 
       {/* Leaderboard table */}
       <div className="card overflow-hidden">
-        {/* Mode description */}
         {mode === 'perEvent' && (
           <div className="px-4 sm:px-6 py-3 border-b border-bg-border bg-accent-blue/5">
             <p className="text-xs text-accent-blue/80">
@@ -355,7 +418,6 @@ export default function Leaderboard() {
         </div>
       </div>
 
-      {/* Footer note */}
       <p className="text-xs text-white/25 text-center mt-6">
         Click any row to see per-game breakdown · Summer Games score ~3× Winter due to more medal events
       </p>
