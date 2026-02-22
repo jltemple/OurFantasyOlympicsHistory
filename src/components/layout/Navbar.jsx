@@ -10,9 +10,9 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-bg/80 backdrop-blur-md border-b border-bg-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-6">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 font-bold text-lg tracking-tight text-white hover:text-accent-blue transition-colors">
-          <span className="text-2xl">🏅</span>
-          <span>Marcus' Fantasy Olympics</span>
+        <Link to="/" className="flex items-center gap-2 font-bold text-lg tracking-tight text-white hover:text-accent-blue transition-colors min-w-0">
+          <span className="text-2xl flex-shrink-0">🏅</span>
+          <span className="truncate">Marcus' Fantasy Olympics</span>
         </Link>
 
         {/* Nav links */}

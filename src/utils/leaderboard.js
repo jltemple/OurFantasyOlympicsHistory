@@ -79,6 +79,44 @@ export function computeAllTimeStats(players, fromGameId) {
 }
 
 /**
+ * Builds a per-game pts-per-medal-event series (one point per game, not cumulative).
+ * Shape: [{ gameLabel, gameId, [playerId]: ptsPerMedalEvent|null, ... }, ...]
+ *
+ * Each point is the player's score for that single game divided by medalEvents.
+ * Players who didn't participate in a game get null (gap in line).
+ */
+export function buildGameSeriesPerEvent(fromGameId) {
+  const games = filterGamesFrom(fromGameId)
+  if (!games.length) return []
+
+  const activePlayerIds = new Set()
+  games.forEach(gameData => {
+    gameData.playerMappings?.forEach(m => activePlayerIds.add(m.playerId))
+  })
+
+  return games.map(gameData => {
+    const { game } = gameData
+    const medalEvents = game.medalEvents ?? 0
+
+    const point = {
+      gameLabel: `${game.hostCity} '${String(game.year).slice(2)}`,
+      gameId: game.id,
+    }
+
+    activePlayerIds.forEach(pid => {
+      const result = getPlayerFinalResult(gameData, pid)
+      if (result && medalEvents > 0) {
+        point[pid] = Math.round((result.totalScore / medalEvents) * 100) / 100
+      } else {
+        point[pid] = null
+      }
+    })
+
+    return point
+  })
+}
+
+/**
  * Builds a simple per-game cumulative series (one point per game).
  * Shape: [{ gameLabel, gameId, [playerId]: cumulativeScore|null, ... }, ...]
  *

@@ -86,7 +86,7 @@ function makeTickFormatter(gameRegions) {
 }
 
 // ── Simple per-game tooltip ────────────────────────────────────────────────────
-function GameSeriesTooltip({ active, payload, label }) {
+function GameSeriesTooltip({ active, payload, label, perEvent }) {
   if (!active || !payload?.length) return null
   const sorted = [...payload]
     .filter(p => p.value !== null && p.value !== undefined)
@@ -103,7 +103,9 @@ function GameSeriesTooltip({ active, payload, label }) {
               {PLAYER_MAP[entry.dataKey]?.displayName ?? entry.dataKey}
             </span>
           </div>
-          <span className="font-semibold text-white tabular-nums text-xs">{entry.value}</span>
+          <span className="font-semibold text-white tabular-nums text-xs">
+            {perEvent ? entry.value.toFixed(2) : entry.value}
+          </span>
         </div>
       ))}
     </div>
@@ -194,7 +196,7 @@ export default function Leaderboard() {
   const [showAllUpdates,     setShowAllUpdates]      = useState(false)
   const [currentOnly,        setCurrentOnly]         = useState(true)
 
-  const { rows, series, gameSeries, gameRegions, lastGamePlayerIds } =
+  const { rows, series, gameSeries, gameSeriesPerEvent, gameRegions, lastGamePlayerIds } =
     useLeaderboard(fromGameId, mode, currentOnly)
 
   // Derive which playerIds to draw lines for (works for both chart modes)
@@ -329,7 +331,7 @@ export default function Leaderboard() {
       {showChart && (
         <div className="card p-4 sm:p-6 mb-6">
           <h2 className="text-sm font-semibold text-white/60 uppercase tracking-wider mb-1">
-            Cumulative Score Progression
+            {mode === 'perEvent' ? 'Pts / Medal Event by Game' : 'Cumulative Score Progression'}
           </h2>
           {showAllUpdates && (
             <p className="text-xs text-white/30 mb-4">
@@ -337,8 +339,8 @@ export default function Leaderboard() {
             </p>
           )}
 
-          {showAllUpdates ? (
-            /* ── Dense snapshot chart ── */
+          {showAllUpdates && mode === 'raw' ? (
+            /* ── Dense snapshot chart (raw mode only) ── */
             <ResponsiveContainer width="100%" height={400}>
               <LineChart data={series} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                 {gameRegions.map((region, i) => (
@@ -384,7 +386,10 @@ export default function Leaderboard() {
           ) : (
             /* ── Simple per-game chart ── */
             <ResponsiveContainer width="100%" height={400}>
-              <LineChart data={gameSeries} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+              <LineChart
+                data={mode === 'perEvent' ? gameSeriesPerEvent : gameSeries}
+                margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
                 <XAxis
                   dataKey="gameLabel"
@@ -393,7 +398,7 @@ export default function Leaderboard() {
                   tickLine={false}
                 />
                 <YAxis tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12 }} axisLine={false} tickLine={false} width={45} />
-                <Tooltip content={<GameSeriesTooltip />} />
+                <Tooltip content={<GameSeriesTooltip perEvent={mode === 'perEvent'} />} />
                 <Legend content={<ChartLegend />} />
                 {chartPlayerIds.map(pid => (
                   <Line key={pid} type="monotone" dataKey={pid}

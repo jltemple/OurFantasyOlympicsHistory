@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { PLAYERS } from '../data'
-import { computeAllTimeStats, buildSnapshotSeries, buildGameSeries } from '../utils/leaderboard'
+import { computeAllTimeStats, buildSnapshotSeries, buildGameSeries, buildGameSeriesPerEvent } from '../utils/leaderboard'
 
 /**
  * @param {string|null} fromGameId       - Filter games to start from this gameId
@@ -23,6 +23,11 @@ export function useLeaderboard(fromGameId, mode = 'raw', currentPlayersOnly = fa
     [fromGameId]
   )
 
+  const gameSeriesPerEvent = useMemo(
+    () => buildGameSeriesPerEvent(fromGameId),
+    [fromGameId]
+  )
+
   const rows = useMemo(() => {
     let filtered = stats
     if (currentPlayersOnly) {
@@ -40,6 +45,7 @@ export function useLeaderboard(fromGameId, mode = 'raw', currentPlayersOnly = fa
     rows,
     series:             snapshotData.series,
     gameSeries,
+    gameSeriesPerEvent,
     gameRegions:        snapshotData.gameRegions,
     activePlayerIds:    snapshotData.activePlayerIds,
     lastGamePlayerIds:  snapshotData.lastGamePlayerIds,
