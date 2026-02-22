@@ -79,11 +79,13 @@ export function computeAllTimeStats(players, fromGameId) {
 }
 
 /**
- * Builds a per-game pts-per-medal-event series (one point per game, not cumulative).
- * Shape: [{ gameLabel, gameId, [playerId]: ptsPerMedalEvent|null, ... }, ...]
+ * Builds a running-average pts-per-medal-event series (one point per game).
+ * Shape: [{ gameLabel, gameId, [playerId]: runningAvg|null, ... }, ...]
  *
- * Each point is the player's score for that single game divided by medalEvents.
- * Players who didn't participate in a game get null (gap in line).
+ * Each point is cumulative score so far ÷ cumulative medal events so far,
+ * so the line shows how each player's overall average has shifted over time.
+ * Players who didn't participate in a game hold their last average (flat line).
+ * Players who haven't joined yet are absent (line not started).
  */
 export function buildGameSeriesPerEvent(fromGameId) {
   const games = filterGamesFrom(fromGameId)
@@ -93,6 +95,11 @@ export function buildGameSeriesPerEvent(fromGameId) {
   games.forEach(gameData => {
     gameData.playerMappings?.forEach(m => activePlayerIds.add(m.playerId))
   })
+
+  // Running totals per player
+  const cumScore  = {}
+  const cumEvents = {}
+  activePlayerIds.forEach(pid => { cumScore[pid] = 0; cumEvents[pid] = 0 })
 
   return games.map(gameData => {
     const { game } = gameData
@@ -106,10 +113,13 @@ export function buildGameSeriesPerEvent(fromGameId) {
     activePlayerIds.forEach(pid => {
       const result = getPlayerFinalResult(gameData, pid)
       if (result && medalEvents > 0) {
-        point[pid] = Math.round((result.totalScore / medalEvents) * 100) / 100
-      } else {
-        point[pid] = null
+        cumScore[pid]  += result.totalScore
+        cumEvents[pid] += medalEvents
       }
+      if (cumEvents[pid] > 0) {
+        point[pid] = Math.round((cumScore[pid] / cumEvents[pid]) * 100) / 100
+      }
+      // else: hasn't played yet — key absent, line not started
     })
 
     return point

@@ -331,7 +331,7 @@ export default function Leaderboard() {
       {showChart && (
         <div className="card p-4 sm:p-6 mb-6">
           <h2 className="text-sm font-semibold text-white/60 uppercase tracking-wider mb-1">
-            {mode === 'perEvent' ? 'Pts / Medal Event by Game' : 'Cumulative Score Progression'}
+            {mode === 'perEvent' ? 'Running Avg Pts / Medal Event' : 'Cumulative Score Progression'}
           </h2>
           {showAllUpdates && (
             <p className="text-xs text-white/30 mb-4">
