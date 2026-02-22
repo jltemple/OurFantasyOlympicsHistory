@@ -1,0 +1,277 @@
+{
+  "gameId": "milano-2026",
+  "rounds": [
+    {
+      "round": 1,
+      "picks": [
+        { "pick": 1,  "playerId": "bryan",   "sport": "Cross-Country Skiing",      "country": "Norway" },
+        { "pick": 2,  "playerId": "marcus",  "sport": "Speed Skating",             "country": "Netherlands" },
+        { "pick": 3,  "playerId": "laura",   "sport": "Biathlon",                  "country": "Norway" },
+        { "pick": 4,  "playerId": "miles",   "sport": "Alpine Skiing",             "country": "Switzerland" },
+        { "pick": 5,  "playerId": "jessica", "sport": "Biathlon",                  "country": "France" },
+        { "pick": 6,  "playerId": "jon",     "sport": "Freestyle Skiing",          "country": "China" },
+        { "pick": 7,  "playerId": "casey",   "sport": "Alpine Skiing",             "country": "Austria" },
+        { "pick": 8,  "playerId": "leah",    "sport": "Luge",                      "country": "Germany" },
+        { "pick": 9,  "playerId": "josh",    "sport": "Short Track Speed Skating", "country": "South Korea" },
+        { "pick": 10, "playerId": "katie",   "sport": "Freestyle Skiing",          "country": "United States of America" },
+        { "pick": 11, "playerId": "emalee",  "sport": "Bobsleigh",                 "country": "Germany" },
+        { "pick": 12, "playerId": "brandon", "sport": "Snowboarding",              "country": "United States of America" }
+      ]
+    },
+    {
+      "round": 2,
+      "picks": [
+        { "pick": 13, "playerId": "brandon", "sport": "Short Track Speed Skating", "country": "Netherlands" },
+        { "pick": 14, "playerId": "emalee",  "sport": "Freestyle Skiing",          "country": "Switzerland" },
+        { "pick": 15, "playerId": "katie",   "sport": "Speed Skating",             "country": "Canada" },
+        { "pick": 16, "playerId": "josh",    "sport": "Speed Skating",             "country": "United States of America" },
+        { "pick": 17, "playerId": "leah",    "sport": "Speed Skating",             "country": "Japan" },
+        { "pick": 18, "playerId": "casey",   "sport": "Biathlon",                  "country": "Sweden" },
+        { "pick": 19, "playerId": "jon",     "sport": "Snowboarding",              "country": "Austria" },
+        { "pick": 20, "playerId": "jessica", "sport": "Cross-Country Skiing",      "country": "Sweden" },
+        { "pick": 21, "playerId": "miles",   "sport": "Short Track Speed Skating", "country": "China" },
+        { "pick": 22, "playerId": "laura",   "sport": "Freestyle Skiing",          "country": "Canada" },
+        { "pick": 23, "playerId": "marcus",  "sport": "Cross-Country Skiing",      "country": "Finland" },
+        { "pick": 24, "playerId": "bryan",   "sport": "Biathlon",                  "country": "Germany" }
+      ]
+    },
+    {
+      "round": 3,
+      "picks": [
+        { "pick": 25, "playerId": "bryan",   "sport": "Short Track Speed Skating", "country": "Italy" },
+        { "pick": 26, "playerId": "marcus",  "sport": "Alpine Skiing",             "country": "Italy" },
+        { "pick": 27, "playerId": "laura",   "sport": "Snowboarding",              "country": "Canada" },
+        { "pick": 28, "playerId": "miles",   "sport": "Speed Skating",             "country": "South Korea" },
+        { "pick": 29, "playerId": "jessica", "sport": "Alpine Skiing",             "country": "United States of America" },
+        { "pick": 30, "playerId": "jon",     "sport": "Nordic Combined",           "country": "Norway" },
+        { "pick": 31, "playerId": "casey",   "sport": "Short Track Speed Skating", "country": "Canada" },
+        { "pick": 32, "playerId": "leah",    "sport": "Skeleton",                  "country": "Germany" },
+        { "pick": 33, "playerId": "josh",    "sport": "Cross-Country Skiing",      "country": "Germany" },
+        { "pick": 34, "playerId": "katie",   "sport": "Figure Skating",            "country": "United States of America" },
+        { "pick": 35, "playerId": "emalee",  "sport": "Snowboarding",              "country": "New Zealand" },
+        { "pick": 36, "playerId": "brandon", "sport": "Ski Jumping",               "country": "Slovenia" }
+      ]
+    },
+    {
+      "round": 4,
+      "picks": [
+        { "pick": 37, "playerId": "brandon", "sport": "Speed Skating",             "country": "Sweden" },
+        { "pick": 38, "playerId": "emalee",  "sport": "Nordic Combined",           "country": "Germany" },
+        { "pick": 39, "playerId": "katie",   "sport": "Biathlon",                  "country": "Italy" },
+        { "pick": 40, "playerId": "josh",    "sport": "Figure Skating",            "country": "Japan" },
+        { "pick": 41, "playerId": "leah",    "sport": "Alpine Skiing",             "country": "Norway" },
+        { "pick": 42, "playerId": "casey",   "sport": "Freestyle Skiing",          "country": "Sweden" },
+        { "pick": 43, "playerId": "jon",     "sport": "Bobsleigh",                 "country": "United States of America" },
+        { "pick": 44, "playerId": "jessica", "sport": "Snowboarding",              "country": "Japan" },
+        { "pick": 45, "playerId": "miles",   "sport": "Snowboarding",              "country": "China" },
+        { "pick": 46, "playerId": "laura",   "sport": "Speed Skating",             "country": "Norway" },
+        { "pick": 47, "playerId": "marcus",  "sport": "Curling",                   "country": "Sweden" },
+        { "pick": 48, "playerId": "bryan",   "sport": "Alpine Skiing",             "country": "France" }
+      ]
+    },
+    {
+      "round": 5,
+      "picks": [
+        { "pick": 49, "playerId": "bryan",   "sport": "Freestyle Skiing",          "country": "Australia" },
+        { "pick": 50, "playerId": "marcus",  "sport": "Ski Jumping",               "country": "Norway" },
+        { "pick": 51, "playerId": "laura",   "sport": "Alpine Skiing",             "country": "Sweden" },
+        { "pick": 52, "playerId": "miles",   "sport": "Freestyle Skiing",          "country": "Norway" },
+        { "pick": 53, "playerId": "jessica", "sport": "Freestyle Skiing",          "country": "France" },
+        { "pick": 54, "playerId": "jon",     "sport": "Ski Jumping",               "country": "Austria" },
+        { "pick": 55, "playerId": "casey",   "sport": "Luge",                      "country": "Austria" },
+        { "pick": 56, "playerId": "leah",    "sport": "Ski Jumping",               "country": "Germany" },
+        { "pick": 57, "playerId": "josh",    "sport": "Freestyle Skiing",          "country": "Italy" },
+        { "pick": 58, "playerId": "katie",   "sport": "Ice Hockey",                "country": "Finland" },
+        { "pick": 59, "playerId": "emalee",  "sport": "Ski Jumping",               "country": "Japan" },
+        { "pick": 60, "playerId": "brandon", "sport": "Curling",                   "country": "Great Britain" }
+      ]
+    },
+    {
+      "round": 6,
+      "picks": [
+        { "pick": 61, "playerId": "brandon", "sport": "Figure Skating",            "country": "China" },
+        { "pick": 62, "playerId": "emalee",  "sport": "Short Track Speed Skating", "country": "Hungary" },
+        { "pick": 63, "playerId": "katie",   "sport": "Skeleton",                  "country": "Great Britain" },
+        { "pick": 64, "playerId": "josh",    "sport": "Snowboarding",              "country": "Switzerland" },
+        { "pick": 65, "playerId": "leah",    "sport": "Snowboarding",              "country": "Czech Republic" },
+        { "pick": 66, "playerId": "casey",   "sport": "Ice Hockey",                "country": "Canada" },
+        { "pick": 67, "playerId": "jon",     "sport": "Speed Skating",             "country": "Italy" },
+        { "pick": 68, "playerId": "jessica", "sport": "Bobsleigh",                 "country": "Canada" },
+        { "pick": 69, "playerId": "miles",   "sport": "Cross-Country Skiing",      "country": "United States of America" },
+        { "pick": 70, "playerId": "laura",   "sport": "Cross-Country Skiing",      "country": "Italy" },
+        { "pick": 71, "playerId": "marcus",  "sport": "Figure Skating",            "country": "Canada" },
+        { "pick": 72, "playerId": "bryan",   "sport": "Speed Skating",             "country": "China" }
+      ]
+    },
+    {
+      "round": 7,
+      "picks": [
+        { "pick": 73, "playerId": "bryan",   "sport": "Snowboarding",              "country": "Australia" },
+        { "pick": 74, "playerId": "marcus",  "sport": "Biathlon",                  "country": "Czech Republic" },
+        { "pick": 75, "playerId": "laura",   "sport": "Short Track Speed Skating", "country": "United States of America" },
+        { "pick": 76, "playerId": "miles",   "sport": "Figure Skating",            "country": "France" },
+        { "pick": 77, "playerId": "jessica", "sport": "Figure Skating",            "country": "Italy" },
+        { "pick": 78, "playerId": "jon",     "sport": "Alpine Skiing",             "country": "Slovakia" },
+        { "pick": 79, "playerId": "casey",   "sport": "Speed Skating",             "country": "Belgium" },
+        { "pick": 80, "playerId": "leah",    "sport": "Freestyle Skiing",          "country": "Ukraine" },
+        { "pick": 81, "playerId": "josh",    "sport": "Biathlon",                  "country": "Austria" },
+        { "pick": 82, "playerId": "katie",   "sport": "Alpine Skiing",             "country": "Slovenia" },
+        { "pick": 83, "playerId": "emalee",  "sport": "Curling",                   "country": "Italy" },
+        { "pick": 84, "playerId": "brandon", "sport": "Alpine Skiing",             "country": "Germany" }
+      ]
+    },
+    {
+      "round": 8,
+      "picks": [
+        { "pick": 85,  "playerId": "brandon", "sport": "Ice Hockey",                "country": "United States of America" },
+        { "pick": 86,  "playerId": "emalee",  "sport": "Skeleton",                  "country": "Australia" },
+        { "pick": 87,  "playerId": "katie",   "sport": "Cross-Country Skiing",      "country": "Austria" },
+        { "pick": 88,  "playerId": "josh",    "sport": "Alpine Skiing",             "country": "Canada" },
+        { "pick": 89,  "playerId": "leah",    "sport": "Biathlon",                  "country": "Slovakia" },
+        { "pick": 90,  "playerId": "casey",   "sport": "Curling",                   "country": "Canada" },
+        { "pick": 91,  "playerId": "jon",     "sport": "Curling",                   "country": "Norway" },
+        { "pick": 92,  "playerId": "jessica", "sport": "Ski Mountaineering",        "country": "France" },
+        { "pick": 93,  "playerId": "miles",   "sport": "Ski Mountaineering",        "country": "United States of America" },
+        { "pick": 94,  "playerId": "laura",   "sport": "Figure Skating",            "country": "Germany" },
+        { "pick": 95,  "playerId": "marcus",  "sport": "Snowboarding",              "country": "France" },
+        { "pick": 96,  "playerId": "bryan",   "sport": "Nordic Combined",           "country": "Japan" }
+      ]
+    },
+    {
+      "round": 9,
+      "picks": [
+        { "pick": 97,  "playerId": "bryan",   "sport": "Curling",                   "country": "Japan" },
+        { "pick": 98,  "playerId": "marcus",  "sport": "Nordic Combined",           "country": "Austria" },
+        { "pick": 99,  "playerId": "laura",   "sport": "Luge",                      "country": "United States of America" },
+        { "pick": 100, "playerId": "miles",   "sport": "Ski Jumping",               "country": "Canada" },
+        { "pick": 101, "playerId": "jessica", "sport": "Luge",                      "country": "Italy" },
+        { "pick": 102, "playerId": "jon",     "sport": "Cross-Country Skiing",      "country": "France" },
+        { "pick": 103, "playerId": "casey",   "sport": "Snowboarding",              "country": "Italy" },
+        { "pick": 104, "playerId": "leah",    "sport": "Nordic Combined",           "country": "Estonia" },
+        { "pick": 105, "playerId": "josh",    "sport": "Skeleton",                  "country": "United States of America" },
+        { "pick": 106, "playerId": "katie",   "sport": "Snowboarding",              "country": "Slovenia" },
+        { "pick": 107, "playerId": "emalee",  "sport": "Speed Skating",             "country": "Czech Republic" },
+        { "pick": 108, "playerId": "brandon", "sport": "Skeleton",                  "country": "Netherlands" }
+      ]
+    },
+    {
+      "round": 10,
+      "picks": [
+        { "pick": 109, "playerId": "brandon", "sport": "Freestyle Skiing",          "country": "New Zealand" },
+        { "pick": 110, "playerId": "emalee",  "sport": "Luge",                      "country": "Latvia" },
+        { "pick": 111, "playerId": "katie",   "sport": "Short Track Speed Skating", "country": "Belgium" },
+        { "pick": 112, "playerId": "josh",    "sport": "Bobsleigh",                 "country": "Austria" },
+        { "pick": 113, "playerId": "leah",    "sport": "Figure Skating",            "country": "South Korea" },
+        { "pick": 114, "playerId": "casey",   "sport": "Ski Jumping",               "country": "Poland" },
+        { "pick": 115, "playerId": "jon",     "sport": "Ice Hockey",                "country": "Slovakia" },
+        { "pick": 116, "playerId": "jessica", "sport": "Speed Skating",             "country": "Germany" },
+        { "pick": 117, "playerId": "miles",   "sport": "Biathlon",                  "country": "United States of America" },
+        { "pick": 118, "playerId": "laura",   "sport": "Bobsleigh",                 "country": "Great Britain" },
+        { "pick": 119, "playerId": "marcus",  "sport": "Freestyle Skiing",          "country": "Japan" },
+        { "pick": 120, "playerId": "bryan",   "sport": "Skeleton",                  "country": "China" }
+      ]
+    },
+    {
+      "round": 11,
+      "picks": [
+        { "pick": 121, "playerId": "bryan",   "sport": "Figure Skating",            "country": "Great Britain" },
+        { "pick": 122, "playerId": "marcus",  "sport": "Ski Mountaineering",        "country": "Switzerland" },
+        { "pick": 123, "playerId": "laura",   "sport": "Ski Jumping",               "country": "United States of America" },
+        { "pick": 124, "playerId": "miles",   "sport": "Curling",                   "country": "United States of America" },
+        { "pick": 125, "playerId": "jessica", "sport": "Curling",                   "country": "Switzerland" },
+        { "pick": 126, "playerId": "jon",     "sport": "Biathlon",                  "country": "Belgium" },
+        { "pick": 127, "playerId": "casey",   "sport": "Cross-Country Skiing",      "country": "Slovenia" },
+        { "pick": 128, "playerId": "leah",    "sport": "Curling",                   "country": "South Korea" },
+        { "pick": 129, "playerId": "josh",    "sport": "Ski Jumping",               "country": "Switzerland" },
+        { "pick": 130, "playerId": "katie",   "sport": "Curling",                   "country": "Czech Republic" },
+        { "pick": 131, "playerId": "emalee",  "sport": "Cross-Country Skiing",      "country": "Canada" },
+        { "pick": 132, "playerId": "brandon", "sport": "Biathlon",                  "country": "Slovenia" }
+      ]
+    },
+    {
+      "round": 12,
+      "picks": [
+        { "pick": 133, "playerId": "brandon", "sport": "Bobsleigh",                 "country": "Netherlands" },
+        { "pick": 134, "playerId": "emalee",  "sport": "Biathlon",                  "country": "Canada" },
+        { "pick": 135, "playerId": "katie",   "sport": "Ski Jumping",               "country": "Czech Republic" },
+        { "pick": 136, "playerId": "josh",    "sport": "Ski Mountaineering",        "country": "Italy" },
+        { "pick": 137, "playerId": "leah",    "sport": "Bobsleigh",                 "country": "Switzerland" },
+        { "pick": 138, "playerId": "casey",   "sport": "Bobsleigh",                 "country": "Australia" },
+        { "pick": 139, "playerId": "jon",     "sport": "Figure Skating",            "country": "Poland" },
+        { "pick": 140, "playerId": "jessica", "sport": "Short Track Speed Skating", "country": "Japan" },
+        { "pick": 141, "playerId": "miles",   "sport": "Ice Hockey",                "country": "Switzerland" },
+        { "pick": 142, "playerId": "laura",   "sport": "Ski Mountaineering",        "country": "Spain" },
+        { "pick": 143, "playerId": "marcus",  "sport": "Bobsleigh",                 "country": "South Korea" },
+        { "pick": 144, "playerId": "bryan",   "sport": "Ski Mountaineering",        "country": "Germany" }
+      ]
+    },
+    {
+      "round": 13,
+      "picks": [
+        { "pick": 145, "playerId": "bryan",   "sport": "Ice Hockey",                "country": "Sweden" },
+        { "pick": 146, "playerId": "marcus",  "sport": "Short Track Speed Skating", "country": "Poland" },
+        { "pick": 147, "playerId": "laura",   "sport": "Nordic Combined",           "country": "Finland" },
+        { "pick": 148, "playerId": "miles",   "sport": "Skeleton",                  "country": "Austria" },
+        { "pick": 149, "playerId": "jessica", "sport": "Ski Jumping",               "country": "Bulgaria" },
+        { "pick": 150, "playerId": "jon",     "sport": "Luge",                      "country": "Poland" },
+        { "pick": 151, "playerId": "casey",   "sport": "Figure Skating",            "country": "Spain" },
+        { "pick": 152, "playerId": "leah",    "sport": "Short Track Speed Skating", "country": "France" },
+        { "pick": 153, "playerId": "josh",    "sport": "Luge",                      "country": "Ukraine" },
+        { "pick": 154, "playerId": "katie",   "sport": "Ski Mountaineering",        "country": "Poland" },
+        { "pick": 155, "playerId": "emalee",  "sport": "Figure Skating",            "country": "Georgia" },
+        { "pick": 156, "playerId": "brandon", "sport": "Ski Mountaineering",        "country": "Austria" }
+      ]
+    },
+    {
+      "round": 14,
+      "picks": [
+        { "pick": 157, "playerId": "brandon", "sport": "Cross-Country Skiing",      "country": "Poland" },
+        { "pick": 158, "playerId": "emalee",  "sport": "Alpine Skiing",             "country": "Czech Republic" },
+        { "pick": 159, "playerId": "katie",   "sport": "Nordic Combined",           "country": "Czech Republic" },
+        { "pick": 160, "playerId": "josh",    "sport": "Nordic Combined",           "country": "France" },
+        { "pick": 161, "playerId": "leah",    "sport": "Cross-Country Skiing",      "country": "Switzerland" },
+        { "pick": 162, "playerId": "casey",   "sport": "Nordic Combined",           "country": "United States of America" },
+        { "pick": 163, "playerId": "jon",     "sport": "Skeleton",                  "country": "Czech Republic" },
+        { "pick": 164, "playerId": "jessica", "sport": "Nordic Combined",           "country": "Italy" },
+        { "pick": 165, "playerId": "miles",   "sport": "Luge",                      "country": "Sweden" },
+        { "pick": 166, "playerId": "laura",   "sport": "Curling",                   "country": "China" },
+        { "pick": 167, "playerId": "marcus",  "sport": "Luge",                      "country": "Canada" },
+        { "pick": 168, "playerId": "bryan",   "sport": "Bobsleigh",                 "country": "Slovakia" }
+      ]
+    },
+    {
+      "round": 15,
+      "picks": [
+        { "pick": 169, "playerId": "bryan",   "sport": "Ski Jumping",               "country": "Sweden" },
+        { "pick": 170, "playerId": "marcus",  "sport": "Skeleton",                  "country": "Italy" },
+        { "pick": 171, "playerId": "laura",   "sport": "Ice Hockey",                "country": "Germany" },
+        { "pick": 172, "playerId": "miles",   "sport": "Nordic Combined",           "country": "Poland" },
+        { "pick": 173, "playerId": "jessica", "sport": "Skeleton",                  "country": "Belgium" },
+        { "pick": 174, "playerId": "jon",     "sport": "Short Track Speed Skating", "country": "Individual Neutral Athletes" },
+        { "pick": 175, "playerId": "casey",   "sport": "Ski Mountaineering",        "country": "Canada" },
+        { "pick": 176, "playerId": "leah",    "sport": "Ice Hockey",                "country": "Czech Republic" },
+        { "pick": 177, "playerId": "josh",    "sport": "Ice Hockey",                "country": "France" },
+        { "pick": 178, "playerId": "katie",   "sport": "Bobsleigh",                 "country": "Israel" },
+        { "pick": 179, "playerId": "emalee",  "sport": "Ice Hockey",                "country": "Italy" },
+        { "pick": 180, "playerId": "brandon", "sport": "Luge",                      "country": "Switzerland" }
+      ]
+    },
+    {
+      "round": 16,
+      "picks": [
+        { "pick": 181, "playerId": "brandon", "sport": "Nordic Combined",           "country": "Canada" },
+        { "pick": 182, "playerId": "emalee",  "sport": "Ski Mountaineering",        "country": "Australia" },
+        { "pick": 183, "playerId": "katie",   "sport": "Luge",                      "country": "Argentina" },
+        { "pick": 184, "playerId": "josh",    "sport": "Curling",                   "country": "Denmark" },
+        { "pick": 185, "playerId": "leah",    "sport": "Ski Mountaineering",        "country": "Norway" },
+        { "pick": 186, "playerId": "casey",   "sport": "Skeleton",                  "country": "Canada" },
+        { "pick": 187, "playerId": "jon",     "sport": "Ski Mountaineering",        "country": "Belgium" },
+        { "pick": 188, "playerId": "jessica", "sport": "Ice Hockey",                "country": "Japan" },
+        { "pick": 189, "playerId": "miles",   "sport": "Bobsleigh",                 "country": "China" },
+        { "pick": 190, "playerId": "laura",   "sport": "Skeleton",                  "country": "South Korea" },
+        { "pick": 191, "playerId": "marcus",  "sport": "Ice Hockey",                "country": "Latvia" },
+        { "pick": 192, "playerId": "bryan",   "sport": "Luge",                      "country": "Czech Republic" }
+      ]
+    }
+  ]
+}
