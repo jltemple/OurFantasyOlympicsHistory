@@ -10,6 +10,7 @@ import { PLAYER_COLORS } from '../constants/playerColors'
 import PageWrapper from '../components/layout/PageWrapper'
 import PlayerColorDot from '../components/ui/PlayerColorDot'
 import TrophyIcon from '../components/ui/TrophyIcon'
+import { useTheme } from '../context/ThemeContext'
 
 // ── Game region colors (alternating bands, Summer/Winter tints) ───────────────
 const REGION_FILLS = [
@@ -59,11 +60,11 @@ function SnapshotTooltip({ active, payload, label }) {
   )
 }
 
-function ChartLegend({ payload }) {
+function ChartLegend({ payload, tickColor }) {
   return (
     <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center mt-2">
       {payload?.map(entry => (
-        <div key={entry.dataKey} className="flex items-center gap-1.5 text-xs text-white/60">
+        <div key={entry.dataKey} className="flex items-center gap-1.5 text-xs" style={{ color: tickColor }}>
           <span
             className="w-3 h-0.5 inline-block rounded-full"
             style={{ backgroundColor: entry.color }}
@@ -195,6 +196,13 @@ export default function Leaderboard() {
   const [showChart,          setShowChart]           = useState(true)
   const [showAllUpdates,     setShowAllUpdates]      = useState(false)
   const [currentOnly,        setCurrentOnly]         = useState(true)
+
+  const { theme } = useTheme()
+  const isLight = theme === 'light'
+  const tickColor  = isLight ? 'rgba(15,23,42,0.5)'  : 'rgba(255,255,255,0.4)'
+  const gridColor  = isLight ? 'rgba(0,0,0,0.06)'    : 'rgba(255,255,255,0.05)'
+  const axisColor  = isLight ? 'rgba(0,0,0,0.1)'     : 'rgba(255,255,255,0.08)'
+  const labelColor = isLight ? 'rgba(15,23,42,0.3)'  : 'rgba(255,255,255,0.18)'
 
   const { rows, series, gameSeries, gameSeriesPerEvent, gameRegions, lastGamePlayerIds } =
     useLeaderboard(fromGameId, mode, currentOnly)
@@ -353,27 +361,27 @@ export default function Leaderboard() {
                     label={{
                       value: `${region.gameName.split(' ')[0]} '${String(region.year).slice(2)}`,
                       position: 'insideTop',
-                      fill: 'rgba(255,255,255,0.18)',
+                      fill: labelColor,
                       fontSize: 11,
                       fontWeight: 600,
                     }}
                   />
                 ))}
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
                 <XAxis
                   dataKey="idx"
                   type="number"
                   domain={['dataMin', 'dataMax']}
                   tickFormatter={tickFormatter}
-                  tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 11 }}
-                  axisLine={{ stroke: 'rgba(255,255,255,0.08)' }}
+                  tick={{ fill: tickColor, fontSize: 11 }}
+                  axisLine={{ stroke: axisColor }}
                   tickLine={false}
                   interval={0}
                   ticks={gameRegions.map(r => Math.round((r.startIdx + r.endIdx) / 2))}
                 />
-                <YAxis tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12 }} axisLine={false} tickLine={false} width={45} />
+                <YAxis tick={{ fill: tickColor, fontSize: 12 }} axisLine={false} tickLine={false} width={45} />
                 <Tooltip content={<SnapshotTooltip />} />
-                <Legend content={<ChartLegend />} />
+                <Legend content={<ChartLegend tickColor={tickColor} />} />
                 {chartPlayerIds.map(pid => (
                   <Line key={pid} type="monotone" dataKey={pid}
                     stroke={PLAYER_COLORS[pid] ?? '#6b7280'} strokeWidth={2}
@@ -390,16 +398,16 @@ export default function Leaderboard() {
                 data={mode === 'perEvent' ? gameSeriesPerEvent : gameSeries}
                 margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+                <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
                 <XAxis
                   dataKey="gameLabel"
-                  tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12 }}
-                  axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
+                  tick={{ fill: tickColor, fontSize: 12 }}
+                  axisLine={{ stroke: axisColor }}
                   tickLine={false}
                 />
-                <YAxis tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12 }} axisLine={false} tickLine={false} width={45} />
+                <YAxis tick={{ fill: tickColor, fontSize: 12 }} axisLine={false} tickLine={false} width={45} />
                 <Tooltip content={<GameSeriesTooltip perEvent={mode === 'perEvent'} />} />
-                <Legend content={<ChartLegend />} />
+                <Legend content={<ChartLegend tickColor={tickColor} />} />
                 {chartPlayerIds.map(pid => (
                   <Line key={pid} type="monotone" dataKey={pid}
                     stroke={PLAYER_COLORS[pid] ?? '#6b7280'} strokeWidth={2}

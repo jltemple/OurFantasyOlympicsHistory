@@ -5,6 +5,7 @@ import {
 import { PLAYER_COLORS } from '../../constants/playerColors'
 import { PLAYER_MAP } from '../../data'
 import { buildProgressSeries } from '../../utils/standings'
+import { useTheme } from '../../context/ThemeContext'
 
 function CustomTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null
@@ -33,11 +34,11 @@ function CustomTooltip({ active, payload, label }) {
   )
 }
 
-function CustomLegend({ payload }) {
+function CustomLegend({ payload, tickColor }) {
   return (
     <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center mt-2">
       {payload?.map(entry => (
-        <div key={entry.dataKey} className="flex items-center gap-1.5 text-xs text-white/60">
+        <div key={entry.dataKey} className="flex items-center gap-1.5 text-xs" style={{ color: tickColor }}>
           <span
             className="w-3 h-0.5 inline-block rounded-full"
             style={{ backgroundColor: entry.color }}
@@ -50,32 +51,38 @@ function CustomLegend({ payload }) {
 }
 
 export default function ProgressLineChart({ gameData, height = 400 }) {
+  const { theme } = useTheme()
+  const isLight = theme === 'light'
+
+  const tickColor  = isLight ? 'rgba(15,23,42,0.5)'  : 'rgba(255,255,255,0.4)'
+  const gridColor  = isLight ? 'rgba(0,0,0,0.06)'    : 'rgba(255,255,255,0.05)'
+  const axisColor  = isLight ? 'rgba(0,0,0,0.1)'     : 'rgba(255,255,255,0.1)'
+
   const series = buildProgressSeries(gameData)
   if (!series.length) return (
     <p className="text-white/40 text-center py-12">No snapshot data available.</p>
   )
 
-  // Collect all playerIds from the series keys (exclude metadata keys)
   const playerIds = Object.keys(series[0]).filter(k => k !== 'dayLabel' && k !== 'date')
 
   return (
     <ResponsiveContainer width="100%" height={height}>
       <LineChart data={series} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+        <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
         <XAxis
           dataKey="dayLabel"
-          tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12 }}
-          axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
+          tick={{ fill: tickColor, fontSize: 12 }}
+          axisLine={{ stroke: axisColor }}
           tickLine={false}
         />
         <YAxis
-          tick={{ fill: 'rgba(255,255,255,0.4)', fontSize: 12 }}
+          tick={{ fill: tickColor, fontSize: 12 }}
           axisLine={false}
           tickLine={false}
           width={45}
         />
         <Tooltip content={<CustomTooltip />} />
-        <Legend content={<CustomLegend />} />
+        <Legend content={<CustomLegend tickColor={tickColor} />} />
         {playerIds.map(pid => (
           <Line
             key={pid}
