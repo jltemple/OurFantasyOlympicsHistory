@@ -144,53 +144,58 @@ function DraftLogTab({ draftData }) {
     )
   }
 
+  const totalPicks = draftData.rounds.reduce((sum, r) => sum + r.picks.length, 0)
+
   return (
     <div>
       <div className="mb-4 text-white/40 text-sm">
-        {draftData.rounds.length} rounds · {draftData.rounds.reduce((sum, r) => sum + r.picks.length, 0)} total picks
+        {draftData.rounds.length} rounds · {totalPicks} total picks
       </div>
-      <div className="space-y-6">
-        {draftData.rounds.map(round => (
-          <div key={round.round}>
-            <h3 className="text-xs font-semibold uppercase tracking-widest text-white/30 mb-2 px-1">
-              Round {round.round}
-            </h3>
-            <div className="overflow-x-auto rounded-lg border border-bg-border">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-white/40 text-xs uppercase tracking-wider border-b border-bg-border bg-white/[0.02]">
-                    <th className="text-center py-2 px-3 w-12">#</th>
-                    <th className="text-left py-2 px-3">Player</th>
-                    <th className="text-left py-2 px-3">Sport</th>
-                    <th className="text-left py-2 px-3">Country</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-bg-border">
-                  {round.picks.map(pick => {
-                    const player = PLAYER_MAP[pick.playerId]
-                    return (
-                      <tr key={pick.pick} className="table-row-hover">
-                        <td className="py-2.5 px-3 text-center text-white/30 tabular-nums text-xs">
-                          {pick.pick}
-                        </td>
-                        <td className="py-2.5 px-3">
-                          <div className="flex items-center gap-2">
-                            <PlayerColorDot playerId={pick.playerId} />
-                            <span className="font-medium text-white">
-                              {player?.displayName ?? pick.playerId}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="py-2.5 px-3 text-white/70">{pick.sport}</td>
-                        <td className="py-2.5 px-3 text-white/50">{pick.country}</td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ))}
+      <div className="overflow-x-auto rounded-lg border border-bg-border">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="text-white/40 text-xs uppercase tracking-wider border-b border-bg-border bg-white/[0.02]">
+              <th className="text-center py-2 px-3 w-12">#</th>
+              <th className="text-left py-2 px-3 w-36">Player</th>
+              <th className="text-left py-2 px-3">Sport</th>
+              <th className="text-left py-2 px-3">Country</th>
+            </tr>
+          </thead>
+          <tbody>
+            {draftData.rounds.map(round => (
+              <>
+                <tr key={`round-${round.round}`} className="border-t border-bg-border">
+                  <td
+                    colSpan={4}
+                    className="py-1.5 px-3 text-xs font-semibold uppercase tracking-widest text-white/25 bg-white/[0.02]"
+                  >
+                    Round {round.round}
+                  </td>
+                </tr>
+                {round.picks.map(pick => {
+                  const player = PLAYER_MAP[pick.playerId]
+                  return (
+                    <tr key={pick.pick} className="table-row-hover border-t border-bg-border">
+                      <td className="py-2.5 px-3 text-center text-white/30 tabular-nums text-xs">
+                        {pick.pick}
+                      </td>
+                      <td className="py-2.5 px-3">
+                        <div className="flex items-center gap-2">
+                          <PlayerColorDot playerId={pick.playerId} />
+                          <span className="font-medium text-white">
+                            {player?.displayName ?? pick.playerId}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-2.5 px-3 text-white/70">{pick.sport}</td>
+                      <td className="py-2.5 px-3 text-white/50">{pick.country}</td>
+                    </tr>
+                  )
+                })}
+              </>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   )
