@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useGame } from '../hooks/useGame'
 import { PLAYER_MAP } from '../data'
@@ -9,10 +9,11 @@ import SeasonBadge from '../components/ui/SeasonBadge'
 import PlayerColorDot from '../components/ui/PlayerColorDot'
 import ProgressLineChart from '../components/charts/ProgressLineChart'
 import { getFlag } from '../constants/countryFlags'
+import milano2026Draft from '../../data/draft-logs/milano-2026-draft.json'
 
-// Draft log files keyed by gameId — add an entry here when a new draft log exists
-const DRAFT_LOG_IMPORTS = {
-  'milano-2026': () => import('../../data/draft-logs/milano-2026-draft.json'),
+// Map gameId → draft log data (statically imported so Vite bundles them correctly)
+const DRAFT_LOGS = {
+  'milano-2026': milano2026Draft,
 }
 
 const BASE_TABS = [
@@ -212,14 +213,9 @@ export default function GameOverview() {
   const { gameId } = useParams()
   const { gameData, finalStandings, playerMappingsMap, error } = useGame(gameId)
   const [activeTab, setActiveTab] = useState('standings')
-  const [draftData, setDraftData] = useState(null)
 
-  const hasDraftLog = gameId in DRAFT_LOG_IMPORTS
-
-  useEffect(() => {
-    if (!hasDraftLog) return
-    DRAFT_LOG_IMPORTS[gameId]().then(mod => setDraftData(mod.default))
-  }, [gameId, hasDraftLog])
+  const draftData = DRAFT_LOGS[gameId] ?? null
+  const hasDraftLog = draftData !== null
 
   const TABS = hasDraftLog
     ? [...BASE_TABS, { label: 'Draft Log', value: 'draftlog' }]
