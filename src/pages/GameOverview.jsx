@@ -8,6 +8,7 @@ import TrophyIcon from '../components/ui/TrophyIcon'
 import SeasonBadge from '../components/ui/SeasonBadge'
 import PlayerColorDot from '../components/ui/PlayerColorDot'
 import ProgressLineChart from '../components/charts/ProgressLineChart'
+import { getFlag } from '../constants/countryFlags'
 
 // Draft log files keyed by gameId — add an entry here when a new draft log exists
 const DRAFT_LOG_IMPORTS = {
@@ -188,7 +189,12 @@ function DraftLogTab({ draftData }) {
                         </div>
                       </td>
                       <td className="py-2.5 px-3 text-white/70">{pick.sport}</td>
-                      <td className="py-2.5 px-3 text-white/50">{pick.country}</td>
+                      <td className="py-2.5 px-3 text-white/50">
+                        <span className="flex items-center gap-1.5">
+                          <span className="text-base leading-none">{getFlag(pick.country)}</span>
+                          {pick.country}
+                        </span>
+                      </td>
                     </tr>
                   )
                 })}
