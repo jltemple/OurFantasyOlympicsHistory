@@ -6,5 +6,13 @@ export default defineConfig({
   base: '/OurFantasyOlympicsHistory/',
   build: {
     outDir: 'docs',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react':    ['react', 'react-dom', 'react-router-dom'],
+          'vendor-recharts': ['recharts'],
+        },
+      },
+    },
   },
 })
