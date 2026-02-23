@@ -115,6 +115,7 @@ export const COUNTRY_FLAGS = {
   'Uganda': '🇺🇬',
   'Ukraine': '🇺🇦',
   'United States': '🇺🇸',
+  'United States of America': '🇺🇸',
   'USA': '🇺🇸',
   'Uzbekistan': '🇺🇿',
   'Venezuela': '🇻🇪',
