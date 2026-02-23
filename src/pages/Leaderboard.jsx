@@ -199,10 +199,10 @@ export default function Leaderboard() {
 
   const { theme } = useTheme()
   const isLight = theme === 'light'
-  const tickColor  = isLight ? 'rgba(15,23,42,0.5)'  : 'rgba(255,255,255,0.4)'
-  const gridColor  = isLight ? 'rgba(0,0,0,0.06)'    : 'rgba(255,255,255,0.05)'
-  const axisColor  = isLight ? 'rgba(0,0,0,0.1)'     : 'rgba(255,255,255,0.08)'
-  const labelColor = isLight ? 'rgba(15,23,42,0.3)'  : 'rgba(255,255,255,0.18)'
+  const tickColor  = isLight ? 'rgba(15,23,42,0.6)'  : 'rgba(255,255,255,0.4)'
+  const gridColor  = isLight ? 'rgba(0,0,0,0.15)'    : 'rgba(255,255,255,0.05)'
+  const axisColor  = isLight ? 'rgba(0,0,0,0.25)'    : 'rgba(255,255,255,0.08)'
+  const labelColor = isLight ? 'rgba(15,23,42,0.4)'  : 'rgba(255,255,255,0.18)'
 
   const { rows, series, gameSeries, gameSeriesPerEvent, gameRegions, lastGamePlayerIds } =
     useLeaderboard(fromGameId, mode, currentOnly)

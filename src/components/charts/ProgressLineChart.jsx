@@ -54,9 +54,9 @@ export default function ProgressLineChart({ gameData, height = 400 }) {
   const { theme } = useTheme()
   const isLight = theme === 'light'
 
-  const tickColor  = isLight ? 'rgba(15,23,42,0.5)'  : 'rgba(255,255,255,0.4)'
-  const gridColor  = isLight ? 'rgba(0,0,0,0.06)'    : 'rgba(255,255,255,0.05)'
-  const axisColor  = isLight ? 'rgba(0,0,0,0.1)'     : 'rgba(255,255,255,0.1)'
+  const tickColor  = isLight ? 'rgba(15,23,42,0.6)'  : 'rgba(255,255,255,0.4)'
+  const gridColor  = isLight ? 'rgba(0,0,0,0.15)'    : 'rgba(255,255,255,0.05)'
+  const axisColor  = isLight ? 'rgba(0,0,0,0.25)'    : 'rgba(255,255,255,0.1)'
 
   const series = buildProgressSeries(gameData)
   if (!series.length) return (
